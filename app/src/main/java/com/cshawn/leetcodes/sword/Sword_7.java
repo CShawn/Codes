@@ -71,4 +71,31 @@ public class Sword_7 {
         }
         return null;
     }
+
+    public TreeNode buildTree2(int[] preorder, int[] inorder) {
+        return build(preorder, inorder, null);
+    }
+
+    // 两个数组当前的位置
+    private int preIndex = 0;
+    private int inIndex = 0;
+    private TreeNode build(int[] preorder, int[] inorder, TreeNode parent) {
+        if (preIndex == preorder.length) {
+            return null;
+        }
+        // 对于中序数组：
+        // 创建左子树时，parent为左子树的父结点，若当前值前边没有其他值，只有父结点，则说明之前没有结点，即左子树为空
+        // 创建左子树时，parent为父结点的父结点，若当前值后边没有其他值，只有祖父结点，则说明之后没有结点，即右子树为空
+        if (parent != null && parent.val == inorder[inIndex]) {
+            return null;
+        }
+        // 在前序数组中取一个值创建一个结点
+        TreeNode node = new TreeNode(preorder[preIndex++]);
+        // 将preIndex向右移动，并用以构造左子树，parent传入当前结点
+        node.left = build(preorder, inorder, node);
+        // 构造左子树后，将inIndex向右移动，以创建右子树，parent传入当前结点的父结点
+        inIndex++;
+        node.right = build(preorder, inorder, parent);
+        return node;
+    }
 }

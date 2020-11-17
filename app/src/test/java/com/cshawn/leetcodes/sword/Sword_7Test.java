@@ -23,4 +23,15 @@ public class Sword_7Test {
     public void buildTree(TreeNode expected, int[] preorder, int[] inorder) {
         assertEquals(expected, test.buildTree(preorder, inorder));
     }
+
+    @Test
+    public void buildTree2_empty() {
+        assertNull(test.buildTree2(new int[0], new int[0]));
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(TreeNodeArgumentsProvider.class)
+    public void buildTree2(TreeNode expected, int[] preorder, int[] inorder) {
+        assertEquals(expected, test.buildTree2(preorder, inorder));
+    }
 }
