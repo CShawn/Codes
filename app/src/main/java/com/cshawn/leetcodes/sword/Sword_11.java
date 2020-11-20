@@ -26,23 +26,22 @@ public class Sword_11 {
      * 其他情况下，数组被分成两半，两部分都是递增序列，后半部分的最后一个元素小于等于前半部分第一个元素。
      * 
      * 二分查找时，需判断目标值处于哪半部分。
-     * 1. 当所查找的值小于或等于当前值，则接下来的查找区间变为(首元素, 当前值)
+     * 1. 当所查找的值小于当前值，则接下来的查找区间变为(首元素, 当前值)
      * 2. 当所查找的值大于当前值，则接下来的查找区间变为(当前值, 尾元素)
-     *
-     * 综上可知，与普通二分查找只有一点不同，即旋转后（判断首元素大于等于尾元素）当目标值小于所查找的值且目标值小于尾元素时，
-     * 查找区域变为后半部分，其余情况皆等同于普通二分查找。
+     * 3. 当所查找的值等于当前值，此时，最小值可以位于前半部分，也有可能位于后半部分，需要求查找两部分最小值，再求两者中最小者。
      */
     public int minArray(int[] numbers) {
         if (numbers.length == 0) {
             return -1;
         }
+        return minArray(numbers, 0, numbers.length - 1);
+    }
+
+    public int minArray(int[] numbers, int left, int right) {
         // 当首元素小于尾元素，为正常递增，直接返回首元素
-        if (numbers[0] < numbers[numbers.length - 1]) {
-            return numbers[0];
+        if (numbers[left] < numbers[right]) {
+            return numbers[left];
         }
-        // 定义左右两个边界
-        int left = 0;
-        int right = numbers.length - 1;
         // 将初始最小值设为尾元素
         int min = numbers[right];
         // 定义当前查找位置
@@ -51,14 +50,24 @@ public class Sword_11 {
         while (right - left > 1) {
             // 取中值
             n = (left + right) / 2;
-            if (numbers[n] <= min) {
+            if (numbers[n] < min) {
                 // 向左部分查找
                 right = n;
                 // 最小值更新为较小者
                 min = numbers[n];
-            } else {
+            } else if (numbers[n] > min) {
                 // 向右部分查找
                 left = n;
+            } else {
+                // 查找值与当前最小值相等时，需要查找两部分
+//                int minLeft = minArray(numbers, left, n);
+//                int minRight = minArray(numbers, n + 1, right);
+//                min = Math.min(minLeft, minRight);
+//                break;
+
+                // 将最右侧数据剔除，继续查找
+                int temp = Math.min(numbers[++left], numbers[--right]);
+                min = Math.min(temp, min);
             }
         }
         return min;

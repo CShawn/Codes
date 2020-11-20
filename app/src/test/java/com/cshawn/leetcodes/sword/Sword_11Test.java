@@ -27,6 +27,7 @@ public class Sword_11Test {
                     Arguments.of(new int[]{1, 1, 1}, 1),
                     Arguments.of(new int[]{1, 2, 3, 1}, 1),
                     Arguments.of(new int[]{3, 4, 1, 2}, 1),
+                    Arguments.of(new int[]{3, 3, 1, 3}, 1),
                     Arguments.of(new int[]{4, 1, 2, 3}, 1)
             );
         }
