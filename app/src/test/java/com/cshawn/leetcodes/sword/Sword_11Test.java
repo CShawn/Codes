@@ -39,4 +39,10 @@ public class Sword_11Test {
     public void minArray(int[] numbers, int min) {
         assertEquals(min, test.minArray(numbers));
     }
+
+    @ParameterizedTest(name = "case {index}: array = {1}, min = {2}")
+    @ArgumentsSource(ArrayArgumentsProvider.class)
+    public void minArray2(int[] numbers, int min) {
+        assertEquals(min, test.minArray2(numbers));
+    }
 }

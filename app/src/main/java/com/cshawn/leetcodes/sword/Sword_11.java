@@ -37,7 +37,7 @@ public class Sword_11 {
         return minArray(numbers, 0, numbers.length - 1);
     }
 
-    public int minArray(int[] numbers, int left, int right) {
+    private int minArray(int[] numbers, int left, int right) {
         // 当首元素小于尾元素，为正常递增，直接返回首元素
         if (numbers[left] < numbers[right]) {
             return numbers[left];
@@ -65,11 +65,47 @@ public class Sword_11 {
 //                min = Math.min(minLeft, minRight);
 //                break;
 
-                // 将最右侧数据剔除，继续查找
+                // 将两侧数据剔除，继续查找
                 int temp = Math.min(numbers[++left], numbers[--right]);
                 min = Math.min(temp, min);
             }
         }
         return min;
+    }
+
+    /**
+     * 进一步思考，不需要记录最小值，只用标记可能存储最小值的位置
+     * @param numbers 旋转数组
+     * @return 最小值
+     */
+    public int minArray2(int[] numbers) {
+        if (numbers.length == 0) {
+            return -1;
+        }
+        // 定义左右两个边界
+        int left = 0;
+        int right = numbers.length - 1;
+        // 当首元素小于尾元素，为正常递增，直接返回首元素
+        if (numbers[left] < numbers[right]) {
+            return numbers[left];
+        }
+        // 当left和right两个指针相遇时，只剩一个数字就是最小值
+        while (left < right) {
+            // 取中值
+            int n = (left + right) / 2;
+            // 将中值与最右侧数相比
+            if (numbers[n] < numbers[right]) {
+                // 向左部分查找
+                right = n;
+            } else if (numbers[n] > numbers[right]) {
+                // 向右部分查找
+                // 此时位置n的数不可能为最小值，所以从n+1开始
+                left = n + 1;
+            } else {
+                // 将最右侧数据剔除，继续查找
+                right--;
+            }
+        }
+        return numbers[left];
     }
 }
