@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class Sword_14Test {
     private Sword_14 test = new Sword_14();
     @ParameterizedTest
-    @CsvSource({"2, 1", "3, 2", "4, 4", "5, 6", "10, 36"})
+    @CsvSource({"2, 1", "3, 2", "4, 4", "5, 6", "10, 36", "58, 1549681956"})
     void cuttingRope(int n, int expected) {
         assertEquals(expected, test.cuttingRope(n));
     }

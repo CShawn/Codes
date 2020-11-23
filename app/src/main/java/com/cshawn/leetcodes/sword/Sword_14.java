@@ -35,9 +35,22 @@ public class Sword_14 {
      */
     public int cuttingRope(int n) {
         int[] temp = new int[n + 1];
-        return cutting(n, temp);
+//        return cutting(n, temp);
+        // 修改如下后，可见temp相当于dp数组，此解法为动态归划
+        temp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            // 只用遍历到一半位置
+            for (int j = 1; j <= i / 2; j++) {
+                // j为前半段的长度，计算j的最大剪切积和剩余段的最大剪切积，再相乘
+                int num = Math.max(j, temp[j]) * Math.max(i - j, temp[i - j]);
+                // 将temp[i]更新为最大值
+                temp[i] = Math.max(num, temp[i]);
+            }
+        }
+        return temp[n];
     }
 
+    // 这种方法有待改进，定义的temp并不需要每次传入，因为是自底向上，所以直接从temp获取时一定有值
     private int cutting(int n, int[] temp) {
         if (n == 1) {
             return 1;
@@ -49,9 +62,9 @@ public class Sword_14 {
             // 只用遍历到一半位置
             for (int j = 1; j <= (i + 1) / 2; j++) {
                 // j为前半段的长度，计算j的最大剪切积和剩余段的最大剪切积，再相乘
-                int num = Math.max(j, cutting(n - j, temp)) * Math.max(n - j, cutting(n - j, temp));
+                int num = Math.max(j, cutting(j, temp)) * Math.max(i - j, cutting(i - j, temp));
                 // 将temp[i]更新为最大值
-                temp[n] = Math.max(num, temp[i]);
+                temp[i] = Math.max(num, temp[i]);
             }
         }
         return temp[n];
