@@ -59,8 +59,8 @@ public class Sword_21 {
             }
         }
         */
-        
         // 其实不用存储那么多数据，使用双指针，“最靠前的偶数与最靠后的奇数交换”即可
+        /*
         int right = nums.length - 1;
         for (int left = 0; left < nums.length; left++) {
             // 找到最前的偶数，判断奇偶数可以使用位运算优化
@@ -76,6 +76,29 @@ public class Sword_21 {
                 int temp = nums[left];
                 nums[left] = nums[right];
                 nums[right] = temp;
+            }
+        }
+        */
+        int left = 0;
+        int right = nums.length - 1;
+        while (left < right) {
+            boolean leftEven = (nums[left] & 1) == 0;
+            boolean rightOdd = (nums[right] & 1) == 1;
+            if (leftEven && rightOdd) {
+                int temp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = temp;
+                left++;
+                right--;
+            } else {
+                // 左奇时需向右移动
+                if (!leftEven) {
+                    left++;
+                }
+                // 右偶时需向左移动
+                if (!rightOdd) {
+                    right--;
+                }
             }
         }
         return nums;
