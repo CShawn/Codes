@@ -22,6 +22,7 @@ import java.util.Stack;
  */
 public class Sword_21 {
     public int[] exchange(int[] nums) {
+        /* 笨办法：
         if (nums.length == 0) {
             return nums;
         }
@@ -55,6 +56,26 @@ public class Sword_21 {
                 oddIndex = oddIndexes.pop();
             } else {
                 oddIndex = null;
+            }
+        }
+        */
+        
+        // 其实不用存储那么多数据，使用双指针，“最靠前的偶数与最靠后的奇数交换”即可
+        int right = nums.length - 1;
+        for (int left = 0; left < nums.length; left++) {
+            // 找到最前的偶数，判断奇偶数可以使用位运算优化
+            if ((nums[left] & 1) == 0) {
+                // 查找最后的奇数
+                while ((nums[right] & 1) == 0) {
+                    // 最后的奇数在最前的偶数之前，直接返回
+                    if (right <= left) {
+                        return nums;
+                    }
+                    right--;
+                }
+                int temp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = temp;
             }
         }
         return nums;
