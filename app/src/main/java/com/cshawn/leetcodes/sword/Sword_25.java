@@ -15,6 +15,7 @@ package com.cshawn.leetcodes.sword;
  */ 
 public class Sword_25 {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        /*
         // 两个指针分别指向两个链表当前结点的位置
         ListNode node1 = l1;
         ListNode node2 = l2;
@@ -43,5 +44,23 @@ public class Sword_25 {
             }
         }
         return result;
+        */
+        // 以上方法对于链表表头的处理较为繁琐，可以构造一个伪结点，返回其next即可较为便捷
+        // 同时，当两个链表中其中一个的下一个结点为空时，直接链接不空的链表即可结束，不用继续遍历
+        // 优化如下：
+        ListNode temp = new ListNode(0);
+        ListNode cur = temp;
+        while (l1 != null && l2 != null) {
+            if (l1.val <= l2.val) {
+                cur.next = l1;
+                l1 = l1.next;
+            } else {
+                cur.next = l2;
+                l2 = l2.next;
+            }
+            cur = cur.next;
+        }
+        cur.next = l1 != null ? l1 : l2;
+        return temp.next;
     }
 }
