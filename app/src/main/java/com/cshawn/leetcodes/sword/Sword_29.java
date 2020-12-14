@@ -37,31 +37,40 @@ public class Sword_29 {
         // 结束条件为填充完毕
         while (order < spiralOrder.length) {
             // 向右
-            while (order < spiralOrder.length && x < cols - round) {
+            while (x < cols - round) {
                 spiralOrder[order] = matrix[y][x];
                 x++;
                 order ++;
             }
+            if (order >= spiralOrder.length) {
+                return spiralOrder;
+            }
             // 越界后返回并向下
             x--;
             y++;
-            while (order < spiralOrder.length && y < rows - round) {
+            while (y < rows - round) {
                 spiralOrder[order] = matrix[y][x];
                 y++;
                 order ++;
             }
+            if (order >= spiralOrder.length) {
+                return spiralOrder;
+            }
             // 越界后返回并向左
             x--;
             y--;
-            while (order < spiralOrder.length && x >= round) {
+            while (x >= round) {
                 spiralOrder[order] = matrix[y][x];
                 x--;
                 order ++;
             }
+            if (order >= spiralOrder.length) {
+                return spiralOrder;
+            }
             // 越界后返回并向上
             x++;
             y--;
-            while (order < spiralOrder.length && y > round) {
+            while (y > round) {
                 spiralOrder[order] = matrix[y][x];
                 y--;
                 order ++;
