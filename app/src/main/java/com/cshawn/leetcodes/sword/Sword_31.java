@@ -31,6 +31,7 @@ import java.util.Stack;
  */
 public class Sword_31 {
     public boolean validateStackSequences(int[] pushed, int[] popped) {
+        /* 方法1
         // 定义两个指针
         int i = 0, j = 0;
         // 辅助栈
@@ -61,5 +62,32 @@ public class Sword_31 {
             j++;
         }
         return true;
+        */
+        /* 方法2
+        Stack<Integer> stack = new Stack<>();
+        int i = 0;
+        for (int p : pushed) {
+            // 将poshed中的元素依次放入栈中
+            stack.push(p);
+            // 当popped中元素与栈顶元素相等时，依次将栈中元素删除
+            while (!stack.isEmpty() && i < popped.length && stack.peek() == popped[i]) {
+                stack.pop();
+                i++;
+            }
+        }
+        return stack.isEmpty();
+        */
+        // 方法3：栈会增加时间空间成本，且栈的应用只用到了栈顶元素，可以用int代替
+        // 定义两个指针指向两个数组，一个指针记录伪栈顶元素
+        int i = 0, top = -1;
+        for (int p : pushed) {
+            // 将pushed前边遍历过的数据覆盖掉，作为一个伪栈
+            pushed[++top] = p;
+            while (top >= 0 && pushed[top] == popped[i]) {
+                top--;
+                i++;
+            }
+        }
+        return top == -1;
     }
 }

@@ -1,19 +1,16 @@
 package com.cshawn.leetcodes.sword;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-
 import java.util.stream.Stream;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @author: C.Shawn
- * @date: 2020/12/14 22:53
+ * @author C.Shawn
+ * @date 2020/12/14 22:53
  */
 class Sword_31Test {
     private final Sword_31 test = new Sword_31();
