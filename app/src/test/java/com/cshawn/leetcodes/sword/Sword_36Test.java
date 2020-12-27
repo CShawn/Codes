@@ -66,12 +66,34 @@ class Sword_36Test {
 
     @ParameterizedTest
     @ArgumentsSource(NodeArgumentsProvider.class)
+    void treeToDoublyListLeft2(Sword_36.Node node, int size, Integer[] left, Integer[] right) {
+        if (node == null) {
+            assertEquals(0, left.length);
+            assertEquals(0, right.length);
+        } else {
+            assertArrayEquals(left, test.treeToDoublyList2(node).toLeft(size).toArray());
+        }
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(NodeArgumentsProvider.class)
     void treeToDoublyListRight(Sword_36.Node node, int size, Integer[] left, Integer[] right) {
         if (node == null) {
             assertEquals(0, left.length);
             assertEquals(0, right.length);
         } else {
             assertArrayEquals(right, test.treeToDoublyList(node).toRight(size).toArray());
+        }
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(NodeArgumentsProvider.class)
+    void treeToDoublyListRight2(Sword_36.Node node, int size, Integer[] left, Integer[] right) {
+        if (node == null) {
+            assertEquals(0, left.length);
+            assertEquals(0, right.length);
+        } else {
+            assertArrayEquals(right, test.treeToDoublyList2(node).toRight(size).toArray());
         }
     }
 }
