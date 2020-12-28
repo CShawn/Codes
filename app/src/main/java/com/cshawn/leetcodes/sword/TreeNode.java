@@ -1,5 +1,7 @@
 package com.cshawn.leetcodes.sword;
 
+import java.util.Objects;
+
 /**
  * @author C.Shawn
  * @date 2020/11/16 21:55
@@ -78,10 +80,10 @@ public class TreeNode {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj != null && obj instanceof TreeNode) {
+        if (obj instanceof TreeNode) {
             TreeNode node = (TreeNode) obj;
-            boolean leftEquals = this.left == null ? node.left == null : this.left.equals(node.left);
-            boolean rightEquals = this.right == null ? node.right == null : this.right.equals(node.right);
+            boolean leftEquals = Objects.equals(this.left, node.left);
+            boolean rightEquals = Objects.equals(this.right, node.right);
             return this.val == node.val && leftEquals && rightEquals;
         }
         return super.equals(obj);
