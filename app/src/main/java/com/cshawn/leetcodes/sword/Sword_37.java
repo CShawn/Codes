@@ -67,6 +67,7 @@ public class Sword_37 {
             return null;
         }
         TreeNode tree = new TreeNode(Integer.parseInt(list[0]));
+        /*
         // 用集合存储广度优先遍历的二叉树
         List<TreeNode> temp = new ArrayList<>();
         temp.add(tree);
@@ -101,6 +102,29 @@ public class Sword_37 {
             }
             // 取反左右标志位
             left = !left;
+        }
+        */
+        String nullNode = "null";
+        // 用队列存储广度优先遍历的二叉树
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(tree);
+        int index = 1;
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (!nullNode.equals(list[index])) {
+                // 添加左结点
+                node.left = new TreeNode(Integer.parseInt(list[index]));
+                // 并将左结点放入队列
+                queue.add(node.left);
+            }
+            index++;
+            if (!nullNode.equals(list[index])) {
+                // 添加右结点
+                node.right = new TreeNode(Integer.parseInt(list[index]));
+                // 并将右结点放入队列
+                queue.add(node.right);
+            }
+            index++;
         }
         return tree;
     }
