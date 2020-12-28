@@ -1,8 +1,6 @@
 package com.cshawn.leetcodes.sword;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 /**
@@ -127,5 +125,57 @@ public class Sword_37 {
             index++;
         }
         return tree;
+    }
+
+    /**
+     * 使用深度优先
+     */
+    public String serialize2(TreeNode root) {
+        char separator = ',';
+        String nullNode = "null";
+        StringBuilder sb = new StringBuilder("[");
+        if (root != null) {
+            serialize(root, sb, nullNode, separator);
+            sb.deleteCharAt(sb.indexOf(separator + ""));
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    private void serialize(TreeNode node, StringBuilder sb, String nullNode, char separator) {
+        sb.append(separator);
+        if (node != null) {
+            sb.append(node.val);
+            serialize(node.left, sb, nullNode, separator);
+            serialize(node.right, sb, nullNode, separator);
+        } else {
+            sb.append(nullNode);
+        }
+    }
+
+    /**
+     * 深度优先
+     */
+    public TreeNode deserialize2(String data) {
+        if (data == null || data.length() < 3 || !data.startsWith("[") || !data.endsWith("]")) {
+            return null;
+        }
+        String[] list = data.substring(1, data.length() - 1).split(",");
+        if (list.length == 0) {
+            return null;
+        }
+        return deserialize(list, "null");
+    }
+    int index = 0;
+    private TreeNode deserialize(String[] list, String nullNode) {
+        if (nullNode.equals(list[index])) {
+            return null;
+        }
+        TreeNode node = new TreeNode(Integer.parseInt(list[index]));
+        index++;
+        node.left = deserialize(list, nullNode);
+        index++;
+        node.right = deserialize(list, nullNode);
+        return  node;
     }
 }

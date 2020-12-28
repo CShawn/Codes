@@ -46,4 +46,36 @@ class Sword_37Test {
     void deserialize(TreeNode node, String str) {
         assertEquals(node, test.deserialize(str));
     }
+
+    static class TreeNodeArgumentsProvider2 implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    Arguments.of((TreeNode)null, "[]"),
+                    Arguments.of(new TreeNode(1), "[1,null,null]"),
+                    Arguments.of(new TreeNode(1).left(new TreeNode(2)), "[1,2,null,null,null]"),
+                    Arguments.of(new TreeNode(1).left(new TreeNode(2)).right(new TreeNode(3)),
+                            "[1,2,null,null,3,null,null]"
+                    ),
+                    Arguments.of(new TreeNode(1).left(new TreeNode(2).left(new TreeNode(4)).right(new TreeNode(5))).right(new TreeNode(3)),
+                            "[1,2,4,null,null,5,null,null,3,null,null]"
+                    ),
+                    Arguments.of(new TreeNode(1).left(new TreeNode(2).right(new TreeNode(5))).right(new TreeNode(3).right(new TreeNode(7))),
+                            "[1,2,null,5,null,null,3,null,7,null,null]"
+                    )
+            );
+        }
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(TreeNodeArgumentsProvider2.class)
+    void serialize2(TreeNode node, String expected) {
+        assertEquals(expected, test.serialize2(node));
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(TreeNodeArgumentsProvider2.class)
+    void deserialize2(TreeNode node, String str) {
+        assertEquals(node, test.deserialize2(str));
+    }
 }
