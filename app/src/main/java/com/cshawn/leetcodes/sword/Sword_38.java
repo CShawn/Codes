@@ -21,7 +21,7 @@ import java.util.List;
 public class Sword_38 {
     public String[] permutation(String s) {
         String[] result = new String[0];
-        if (s == null) {
+        if (s == null || s.length() == 0) {
             return result;
         }
         char[] array = s.toCharArray();
