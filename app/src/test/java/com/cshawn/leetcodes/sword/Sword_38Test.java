@@ -23,7 +23,10 @@ class Sword_38Test {
                     Arguments.of("1", new String[]{"1"}),
                     Arguments.of("12", new String[]{"12", "21"}),
                     Arguments.of("123", new String[]{
-                            "123", "132", "213", "231", "312", "321"
+                            "132", "231", "123", "321", "213", "312"
+                    }),
+                    Arguments.of("113", new String[]{
+                            "113", "311", "131"
                     })
             );
         }

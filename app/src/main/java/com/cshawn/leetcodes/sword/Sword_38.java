@@ -1,7 +1,7 @@
 package com.cshawn.leetcodes.sword;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 字符串的排列
@@ -29,7 +29,7 @@ public class Sword_38 {
         // 记录当前位置的元素是否已拼接
         boolean[] used = new boolean[s.length()];
         // 结果的集合
-        List<String> list = new ArrayList<>();
+        Set<String> list = new HashSet<>();
         // 将数据看作一棵二叉树，开头为1时树为：[1, 12, 13, 123, 132]
         // 按照深度优先遍历
         dfs(array, sb, used, 0, list);
@@ -44,7 +44,7 @@ public class Sword_38 {
      * @param deep 当前遍历树的层级
      * @param list 存储结果的集合
      */
-    private void dfs(char[] array, StringBuilder sb, boolean[] used, int deep, List<String> list) {
+    private void dfs(char[] array, StringBuilder sb, boolean[] used, int deep, Set<String> list) {
         // 到达最后一层时结束
         if (deep == used.length) {
             // 遍历完一条路径，添加到结果集合中
