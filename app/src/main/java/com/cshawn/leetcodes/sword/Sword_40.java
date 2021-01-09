@@ -54,4 +54,69 @@ public class Sword_40 {
         }
         return result;
     }
+
+    /**
+     * 方法3：快排思想，找到中间数字的位置
+     * 1. 如果恰好为k+1，那么之前的数字就是结果
+     * 2. 如果大于k，则在左侧继续快排
+     * 3. 如果小于k，则在右侧继续快排
+     */
+    public int[] getLeastNumbers2(int[] arr, int k) {
+        if (k >= arr.length) {
+            return arr;
+        }
+        int[] result = new int[k];
+        if (k == 0 || arr.length == 0) {
+            return result;
+        }
+        sortToResult(arr, k, 0, arr.length - 1);
+        for (int i = 0; i < k; i++) {
+            result[i] = arr[i];
+        }
+        return result;
+    }
+
+    private void sortToResult(int[] arr, int k, int left, int right) {
+        int pos = quickSort(arr, left, right);
+        int num = pos - left + 1;
+        if (num == k) {
+            return;
+        } else if (k < num) {
+            sortToResult(arr, k, left, pos - 1);
+        } else {
+            sortToResult(arr, k - num, pos + 1, right);
+        }
+    }
+
+    private int quickSort(int[] arr, int left, int right) {
+        // 选择第一个元素作为中间数字
+        int first = left;
+        int flag = arr[first];
+        int lo = left;
+        int hi = right + 1;
+        while (true) {
+            while (arr[++lo] < flag) {
+                if (lo == right) {
+                    break;
+                }
+            }
+            while (arr[--hi] > flag) {
+                if (hi == left) {
+                    break;
+                }
+            }
+            if (lo >= hi) {
+                break;
+            }
+            // 将lo和hi交换
+            int temp = arr[lo];
+            arr[lo] = arr[hi];
+            arr[hi] = temp;
+        }
+        // 最后将lo和middle交换
+        int temp = arr[hi];
+        arr[hi] = arr[first];
+        arr[first] = temp;
+        return hi;
+    }
 }
