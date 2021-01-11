@@ -34,4 +34,10 @@ class Sword_42Test {
     void maxSubArray(int[] array, int max) {
         assertEquals(max, test.maxSubArray(array));
     }
+
+    @ParameterizedTest
+    @ArgumentsSource(ArrayArgumentsProvider.class)
+    void maxSubArray2(int[] array, int max) {
+        assertEquals(max, test.maxSubArray2(array));
+    }
 }

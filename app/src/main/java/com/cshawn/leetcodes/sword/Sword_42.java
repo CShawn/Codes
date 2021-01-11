@@ -46,4 +46,25 @@ public class Sword_42 {
         }
         return max;
     }
+
+    /**
+     * 利用前缀和，那么[i,j]最大和为sum[j]-sum[i]，
+     * 取巧在于，遍历时，sum[j]减去哪一个数sum[x]得到的值最大，当然是sum[x]最小时。
+     * 用一个数存储左侧最小的sum[x]，一次遍历即可。
+     */
+    public int maxSubArray2(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        // 存储最小的和
+        int minSum = Math.min(0, nums[0]);
+        int max = nums[0];
+        int sum = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            sum += nums[i];
+            max = Math.max(sum - minSum, max);
+            minSum = Math.min(sum, minSum);
+        }
+        return max;
+    }
 }
