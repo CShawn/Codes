@@ -15,4 +15,10 @@ class Sword_43Test {
     void countDigitOne(int n, int count) {
         assertEquals(count, new Sword_43().countDigitOne(n));
     }
+
+    @ParameterizedTest
+    @CsvSource({"0,0", "6,1", "10,2", "12,5", "13,6", "20,12", "258,156"})
+    void countDigitOne2(int n, int count) {
+        assertEquals(count, new Sword_43().countDigitOne2(n));
+    }
 }

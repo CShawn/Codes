@@ -67,4 +67,40 @@ public class Sword_43 {
         }
         return p;
     }
+
+    /**
+     * 上述的方法中，判断数字长度和求幂的方法极丑陋
+     * 可以从数字低位开始计算，不断累计每个位置上数值的前半部分和后半部分
+     */
+    public int countDigitOne2(int n) {
+        // 当前权值
+        int pow = 1;
+        // 高位数值
+        int pre = n / 10;
+        // 当前位置的数字
+        int cur = n % 10;
+        // 低位数值
+        int sub = 0;
+        // 总和
+        int sum = 0;
+        // 当前位数字不为0或高位数值不为0，才进行统计
+        while (pre != 0 || cur != 0) {
+            sum += pre * pow;
+            if (cur == 1) {
+                // 当前数字为1时再加上后半部分数值+1个
+                sum += sub + 1;
+            } else if (cur != 0) {
+                sum += pow;
+            }
+            // 后半部分不断加上当前数字的权值，累计后半部分的值
+            sub += cur * pow;
+            // 取前半部分数字的最后一个数字
+            cur = pre % 10;
+            // 将前半部分去掉最后一个数字
+            pre /= 10;
+            // 将pow上升
+            pow *= 10;
+        }
+        return sum;
+    }
 }
