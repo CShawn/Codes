@@ -54,17 +54,40 @@ public class Sword_44 {
         }
         // 目标所在的数值，如n=14,为数值12的1位置
         long num = (n - left) / len + pow;
-        return getNumByPosition(num, (n - left) % len, len);
+        return getNumByPosition(num, (int) ((n - left) % len), len);
     }
 
     /**
-     * 获取长度为len的数值n十进制的第position位上的数字
+     * 获取长度为len的数值n十进制的第position位上的数字，
      */
-    private int getNumByPosition(long n, long position, int len) {
+    private int getNumByPosition(long n, int position, int len) {
+        // 也可以直接使用字符串方法获取
+//        return String.valueOf(n).charAt(position) - '0';
         long pow = 1;
         for (int i = 1; i < len - position; i++) {
             pow *= 10;
         }
         return (int) (n / pow % 10);
+    }
+
+    /**
+     * 方法2：方法1是累加式的，还可以考虑递减式方法
+     * 同上，计算len位数的个数，将n不断减小
+     */
+    public int findNthDigit2(int n) {
+        // 当前范围为几位数
+        int len = 1;
+        // 当前范围的权值
+        long pow = 1;
+        // len位数的个数，初始1位数有10个
+        long count = 9;
+        while (n > count) {
+            n -= count;
+            pow *= 10;
+            len++;
+            count = pow * 9 * len;
+        }
+        long num = (n - 1) / len + pow;
+        return String.valueOf(num).charAt((n - 1) % len) - '0';
     }
 }

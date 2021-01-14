@@ -15,4 +15,10 @@ class Sword_44Test {
     void findNthDigit(int n, int digit) {
         assertEquals(digit, new Sword_44().findNthDigit(n));
     }
+
+    @ParameterizedTest
+    @CsvSource({"0,0", "9,9", "10,1", "189,9", "190,1", "647,5", "999483,8", "1000000000,1"})
+    void findNthDigit2(int n, int digit) {
+        assertEquals(digit, new Sword_44().findNthDigit2(n));
+    }
 }
