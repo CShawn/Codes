@@ -36,4 +36,21 @@ public class Sword_46 {
         }
         return n_1;
     }
+
+    /**
+     * 鉴于方法1需要一个字符串的空间存储，所以按照数字依次取位的方式可以节约空间
+     * 从后向前
+     */
+    public int translateNum2(int num) {
+        int n_2 = 1, n_1 = 1;
+        while (num != 0) {
+            int sub = num % 10;
+            num /= 10;
+            int temp = num % 10 * 10 + sub;
+            int count = temp >= 10 && temp <= 25 ? n_1 + n_2 : n_1;
+            n_2 = n_1;
+            n_1 = count;
+        }
+        return n_1;
+    }
 }

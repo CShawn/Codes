@@ -15,4 +15,10 @@ class Sword_46Test {
     void translateNum(int num, int count) {
         assertEquals(count, new Sword_46().translateNum(num));
     }
+
+    @ParameterizedTest
+    @CsvSource({"0,1", "1,1", "88,1", "19,2", "256,2", "124,3", "809090003,1"})
+    void translateNum2(int num, int count) {
+        assertEquals(count, new Sword_46().translateNum2(num));
+    }
 }
