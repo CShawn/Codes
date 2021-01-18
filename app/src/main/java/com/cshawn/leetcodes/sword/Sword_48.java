@@ -1,7 +1,9 @@
 package com.cshawn.leetcodes.sword;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 最长不含重复字符的子字符串
@@ -127,6 +129,29 @@ public class Sword_48 {
             map.put(s.charAt(i), i);
             if (dp[i] > max) {
                 max = dp[i];
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 滑动窗口还可以更简洁
+     * 使用Set存储字符出现的位置，不重复时移动right，重复时移动left
+     */
+    public int lengthOfLongestSubstring4(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int max = 0;
+        Set<Character> set = new HashSet<>();
+        for (int left = 0, right = 0; right < s.length(); right++) {
+            // 已存在当前字符时，不断删除前边的字符
+            while (!set.add(s.charAt(right))) {
+                set.remove(s.charAt(left++));
+            }
+            // 更新max
+            if (set.size() > max) {
+                max = set.size();
             }
         }
         return max;
