@@ -15,6 +15,11 @@ public class ListNode {
         return this;
     }
 
+    ListNode next(ListNode node) {
+        findEnd(this).next = node;
+        return this;
+    }
+
     private ListNode findEnd(ListNode node) {
         if (node.next != null) {
             return findEnd(node.next);
