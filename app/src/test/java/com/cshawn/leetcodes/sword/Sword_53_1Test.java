@@ -36,4 +36,10 @@ class Sword_53_1Test {
     void search(int[] nums, int target, int length) {
         assertEquals(length, new Sword_53_1().search(nums, target));
     }
+
+    @ParameterizedTest
+    @ArgumentsSource(DataArgumentsProvider.class)
+    void search2(int[] nums, int target, int length) {
+        assertEquals(length, new Sword_53_1().search2(nums, target));
+    }
 }

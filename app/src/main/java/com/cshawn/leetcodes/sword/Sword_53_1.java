@@ -91,4 +91,26 @@ public class Sword_53_1 {
             return binarySearchRight(nums, target, left, m - 1);
         }
     }
+
+    // 二分查找可以更简单
+    public int search2(int[] nums, int target) {
+        // 因数组排序，故查找target-1查找到的数字为target前的一个数字
+        return binaryFindRight(nums, target) - binaryFindRight(nums, target - 1);
+    }
+
+    private int binaryFindRight(int[] nums, int target) {
+        int left = 0, right = nums.length - 1, m;
+        while (left <= right) {
+            m = (left + right) / 2;
+            // 此处判断条件为<=,查找到的数字即为target的前一个数字
+            if (nums[m] <= target) {
+                // 此时为二分查找
+                left = m + 1;
+            } else {
+                // 此时为二分查找
+                right = m - 1;
+            }
+        }
+        return left;
+    }
 }
