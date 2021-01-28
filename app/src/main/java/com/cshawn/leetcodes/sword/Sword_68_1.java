@@ -1,6 +1,5 @@
 package com.cshawn.leetcodes.sword;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
