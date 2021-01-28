@@ -49,4 +49,23 @@ public class Sword_68_2 {
         // 有匹配返回true
         return b || left || right;
     }
+
+    // 当子树有匹配时返回匹配的结点，无匹配时返回空，最终结果为公共父结点
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null){
+            return null;
+        }
+        if(root == p || root == q){
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor2(root.left, p, q);
+        TreeNode right = lowestCommonAncestor2(root.right, p, q);
+        if(left == null){
+            return right;
+        }
+        if(right == null){
+            return left;
+        }
+        return root;
+    }
 }

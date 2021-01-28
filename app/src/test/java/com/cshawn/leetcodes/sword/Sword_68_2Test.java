@@ -31,4 +31,10 @@ class Sword_68_2Test {
     void lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q, TreeNode parent) {
         Assertions.assertEquals(parent, new Sword_68_2().lowestCommonAncestor(root, p, q));
     }
+
+    @ParameterizedTest
+    @ArgumentsSource(DataArgumentsProvider.class)
+    void lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q, TreeNode parent) {
+        Assertions.assertEquals(parent, new Sword_68_2().lowestCommonAncestor2(root, p, q));
+    }
 }
