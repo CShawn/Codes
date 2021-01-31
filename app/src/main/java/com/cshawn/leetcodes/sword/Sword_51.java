@@ -22,9 +22,7 @@ public class Sword_51 {
             return 0;
         }
         int[] copy = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            copy[i] = nums[i];
-        }
+        System.arraycopy(nums, 0, copy, 0, nums.length);
         return mergeCount(copy, new int[nums.length], 0, nums.length - 1);
     }
 
@@ -41,9 +39,7 @@ public class Sword_51 {
             return count;
         }
         // 复制一份待排序的元素
-        for (int i = left; i <= right; i++) {
-            sort[i] = nums[i];
-        }
+        System.arraycopy(nums, left, sort, left, right + 1 - left);
         int i = left, j = mid + 1;
         for (int k = left; k <= right; k++) {
             if (i > mid) {
