@@ -3,19 +3,29 @@ package com.cshawn.leetcodes.sword;
 import java.util.Arrays;
 
 public class ListNode {
-    int val;
-    ListNode next;
+    public int val;
+    public ListNode next;
 
-    ListNode(int x) {
+    public ListNode(int x) {
         val = x;
     }
 
-    ListNode next(int n) {
+    public ListNode(int[] array) {
+        if (array.length != 0) {
+            int i = 0;
+            val = array[i];
+            while (++i < array.length) {
+                next(array[i]);
+            }
+        }
+    }
+
+    public ListNode next(int n) {
         findEnd(this).next = new ListNode(n);
         return this;
     }
 
-    ListNode next(ListNode node) {
+    public ListNode next(ListNode node) {
         findEnd(this).next = node;
         return this;
     }
