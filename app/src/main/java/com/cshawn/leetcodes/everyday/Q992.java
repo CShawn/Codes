@@ -1,9 +1,7 @@
 package com.cshawn.leetcodes.everyday;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * K 个不同整数的子数组
