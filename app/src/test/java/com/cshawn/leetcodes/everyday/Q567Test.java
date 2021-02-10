@@ -12,14 +12,16 @@ class Q567Test {
 
     @ParameterizedTest
     @CsvSource(value = {
-            ",,true",
-            ",'',true",
-            ",'',true",
-            "'',,false",
-            ",a,true",
-            "'',a,true",
-            "a,,false",
-            "a,'',false",
+            // ",,true",
+            // ",'',true",
+            // ",'',true",
+            // "'',,false",
+            // ",a,true",
+            // "'',a,true",
+            // "a,,false",
+            // "a,'',false",
+
+            "a,a,true",
             "a,ba,true",
             "c,ba,false",
             "aa,ba,false",
@@ -32,7 +34,10 @@ class Q567Test {
             "aab,acacacbacaacabac,true",
             "aab,acacacbacaacabc,false",
             "abc,cacb,true",
-            "adc,dcda,true"
+            "adc,dcda,true",
+            "abbc,acbcbaabbdcbabcba,true",
+            "vuocwszndxhpilvfujnmakne,vxivzcmyxxvvlchcnbirwatjuloyulmrwfiknxqhkclnubtxbxmkngxtauarrbaxnbpobwvsvzvitycqfrpulnmivncjuxxhntxpmiuojvbfsfdwjbqdiymwbvxlrrxedtdhnyrxyijtlzwirpnfqsooedatollvosgutcxidziubcgrwxskketqaxqslfrhybltsmjyshjopblwszlcibvgvwkabrwqhjunjbjqgguxjupxphldyrzmjazqpdsxmljdxfzutgbxddrpkzkcaosuyouszqdvlrjpzywrompedzyxvvvwglftjvaxrjgfztaqxqfxgjtvmsplsvjzyizywglfcsknmpvaagetggcjzpjoklpmzvfqxlryziuggyrdcrbcgepvnwovfgtiqxgjqkvlukzcmminsghqqkzydfabvpkuegaoprkufbuoqvectqpvtunjxtdjhteoakweecnaocvsllbwrotxcigtwoehqpvalqwuhmsbdngocfnewhyypfmhfllpvcjllaqefpcyypsuevxokcujejhydbfgyinjlwhiuecpzvjmttlvxasgfpetprrbiumeroptqhfsbqrxfhvkbsecuimklqjmbvicelsxglbdctbbsxhmklwcmntodsoutdtesawojotnqfjnwbvhbbescbllmjwevqxandaxpiqscqhwcyulrxukjbdismrhhyvuwzphuvcderanzzkfqoxjcclornlkmatzpapttbkjnsjpmqyaoznrudwtqfjsnnyhhclcentngrjhaxyocmkdeobotrcjlofqdchcarwtjvwhjwnpkvvidmnfzluuxseacnomprtwpwrpkjknlagdcjhglenkmuunalbmgvjaijnasegddfsydyamgjgaujqwehbhxniwhgljshdcmhgqrjyoyltajgdxerxoqdbgrpxgriquhkextrlfhrmpkqkcwoyfwcszztdicqruwilxzqdmiggfagkacbpglqwijgohwxggfjfkmvozkzihitcniooezootwebkntcpgvhikdapbyxwfgjvhsboxodnedpcoiqndeasbyryoxetfygqqnfwikejcrgrqmeffxgcskzeyhpedjsxxxfvqjrklsdczmdhrnfnyjrukzxgqpgtxeswxqlczcfhvypkvosdutpidivzixunwynhwaizruqnnozghmwinjazrkmghdmrwmgvcaerbfwphsmiyjutsjnlgcmdsutwffxojyszaxgawjyypboztzqpjijcsqgtaavsduwjqexwhxkazaejgkchxentxjwpnjfauddhafdbqznbcfzquohewtfzdmwpcdhjxrtcduxmuuracdwkrqkbreiuoubqirjgoxkrejvoyrzmvoxpxsagkyggqesprqrtvbnptoqpmfgitkpzfchqlotdccryzwbnmyieufdhshlaycrfszvipkdlwsfntnqszftlbcoxusavav,true",
+            "vuocwszndxhpilvfujnmakne,jvwhjwnpkvvidmnfzluuxseacnomprtwpwrpkjknlagdcjhglenkmuunal,true"
     })
     void checkInclusion(String s1, String s2, boolean result) {
         Assertions.assertEquals(result, new Q567().checkInclusion(s1, s2));
