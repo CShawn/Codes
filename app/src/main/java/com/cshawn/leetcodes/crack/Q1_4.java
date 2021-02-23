@@ -17,7 +17,7 @@ package com.cshawn.leetcodes.crack;
  */
 public class Q1_4 {
     // 将相同字符出现偶数次则抵消，奇数次则剩余，最终剩余的字符为0个或1个
-    public boolean canPermutePalindrome(String s) {
+    public boolean canPermutePalindrome1(String s) {
         if (s == null) {
             return false;
         }
@@ -28,16 +28,30 @@ public class Q1_4 {
         for (int i = 0; i < s.length(); i++) {
             aux[s.charAt(i)] = !aux[s.charAt(i)];
         }
-        for (int i = 0; i < aux.length; i++) {
+        for (boolean b : aux) {
             // 已出现过一次某元素，再次出现一个不同的字符，则不回文
-            if (aux[i] && flag) {
+            if (b && flag) {
                 return false;
             }
             // 出现一个字符则将flag置为true
-            if (aux[i]) {
+            if (b) {
                 flag = true;
             }
         }
         return true;
+    }
+
+    // 当只包括英文时，可以使用一个int以bit位表示出现次数
+    public boolean canPermutePalindrome(String s) {
+        if (s == null) {
+            return false;
+        }
+        int aux = 0;
+        for (int i = 0; i < s.length(); i++) {
+            // 将每个英文字符转换成左移x位的bit位
+            aux ^= 1 << s.charAt(i) - 'a';
+        }
+        // 最终结果为0或2的n次幂
+        return aux == 0 || (aux & aux - 1) == 0;
     }
 }
