@@ -62,7 +62,7 @@ public class ListNode {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj != null && obj instanceof ListNode) {
+        if (obj instanceof ListNode) {
             ListNode node = (ListNode) obj;
             return Arrays.equals(this.toArray(), node.toArray());
         }
