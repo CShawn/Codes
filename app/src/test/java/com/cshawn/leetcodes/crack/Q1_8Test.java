@@ -23,7 +23,9 @@ class Q1_8Test {
                     Arguments.of(new int[][]{new int[]{1,1,1}, new int[]{1,0,1}, new int[]{1,1,1}},
                             new int[][]{new int[]{1,0,1}, new int[]{0,0,0}, new int[]{1,0,1}}),
                     Arguments.of(new int[][]{new int[]{1,0,0,4}, new int[]{5,6,0,8}, new int[]{9,10,11,12}, new int[]{13,14,15,16}},
-                            new int[][]{new int[]{0,0,0,0}, new int[]{0,0,0,0}, new int[]{9,0,0,12}, new int[]{13,0,0,16}})
+                            new int[][]{new int[]{0,0,0,0}, new int[]{0,0,0,0}, new int[]{9,0,0,12}, new int[]{13,0,0,16}}),
+                    Arguments.of(new int[][]{new int[]{0,1,2,0}, new int[]{3,4,5,2}, new int[]{1,3,1,5}},
+                            new int[][]{new int[]{0,0,0,0}, new int[]{0,4,5,0}, new int[]{0,3,1,0}})
             );
         }
     }
@@ -32,6 +34,12 @@ class Q1_8Test {
     @ArgumentsSource(DataArgumentsProvider.class)
     void setZeroes1(int[][] matrix, int[][] result) {
         Assertions.assertArrayEquals(result, new Q1_8().setZeroes1(matrix));
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(DataArgumentsProvider.class)
+    void setZeroes2(int[][] matrix, int[][] result) {
+        Assertions.assertArrayEquals(result, new Q1_8().setZeroes2(matrix));
     }
 
     @ParameterizedTest

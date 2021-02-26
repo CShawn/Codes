@@ -81,7 +81,7 @@ public class Q1_8 {
     }
 
     // 遍历为0的行列，最后再修改0
-    public int[][] setZeroes(int[][] matrix) {
+    public int[][] setZeroes2(int[][] matrix) {
         if (matrix.length == 0) {
             return matrix;
         }
@@ -101,6 +101,57 @@ public class Q1_8 {
                     matrix[i][j] = 0;
                 }
             }
+        }
+        return matrix;
+    }
+
+    // 优化方法2，用第0行来存储需要改0的列，用第0列来存储需要改0的行
+    // 此时需要注意[0][0]位置无法同时记录是行还是列，需要额外变量来存储0行和0列
+    public int[][] setZeroes(int[][] matrix) {
+        if (matrix.length == 0) {
+            return matrix;
+        }
+        // 记录0列是否需要变0
+        boolean rowZero = false, colZero = false;
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][0] == 0) {
+                colZero = true;
+                break;
+            }
+        }
+        // 记录0行是否需要变0
+        for (int j = 0; j < matrix[0].length; j++) {
+            if (matrix[0][j] == 0) {
+                rowZero = true;
+                break;
+            }
+        }
+        // 将要变0的行和列记录在0行和0列
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 1; j < matrix[i].length; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[0][j] = 0;
+                    matrix[i][0] = 0;
+                }
+            }
+        }
+        // 将非0行与非0列变0
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 1; j < matrix[i].length; j++) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        if (colZero) {
+            // 将0列变0
+            for (int i = 0; i < matrix.length; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+        if (rowZero) {
+            // 将0行变0
+            Arrays.fill(matrix[0], 0);
         }
         return matrix;
     }
