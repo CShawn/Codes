@@ -32,7 +32,8 @@ public class Q304 {
     class NumMatrix {
         // 二维前缀和
         private int[][] sums;
-        public NumMatrix(int[][] matrix) {
+        // 方法1
+        public NumMatrix(int[][] matrix, int old) {
             if (matrix.length > 0) {
                 sums = new int[matrix.length][matrix[0].length];
                 sums[0][0] = matrix[0][0];
@@ -50,7 +51,20 @@ public class Q304 {
             }
         }
 
-        public int sumRegion(int row1, int col1, int row2, int col2) {
+        // 优化方法1
+        public NumMatrix(int[][] matrix) {
+            if (matrix.length > 0) {
+                // 类似于链表的盲节点，将数组横列扩展一个宽高
+                sums = new int[matrix.length + 1][matrix[0].length + 1];
+                for (int i = 0; i < matrix.length; i++) {
+                    for (int j = 0; j < matrix[i].length; j++) {
+                        sums[i + 1][j + 1] = matrix[i][j] + sums[i + 1][j] + sums[i][j + 1] - sums[i][j];
+                    }
+                }
+            }
+        }
+
+        public int sumRegion1(int row1, int col1, int row2, int col2) {
             if (sums == null || row1 > row2 || col1 > col2) {
                 return 0;
             }
@@ -70,6 +84,20 @@ public class Q304 {
                 return sums[row2][col2] - sums[row1 - 1][col2];
             }
             return sums[row2][col2] - sums[row2][col1 - 1] - sums[row1 - 1][col2] + sums[row1 - 1][col1 - 1];
+        }
+
+        // 优化方法1
+        public int sumRegion(int row1, int col1, int row2, int col2) {
+            if (sums == null || row1 > row2 || col1 > col2) {
+                return 0;
+            }
+            if (row2 >= sums.length - 1) {
+                row2 = sums.length - 2;
+            }
+            if (col2 >= sums[0].length - 1) {
+                col2 = sums[0].length - 2;
+            }
+            return sums[row2 + 1][col2 + 1] - sums[row2 + 1][col1] - sums[row1][col2 + 1] + sums[row1][col1];
         }
     }
 }
