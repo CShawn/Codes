@@ -7,10 +7,10 @@ import java.util.Objects;
  * @date 2020/11/16 21:55
  */
 public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode(int x) { val = x; }
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+    public TreeNode(int x) { val = x; }
 
     public TreeNode left(TreeNode left) {
         this.left = left;
