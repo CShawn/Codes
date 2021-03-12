@@ -30,10 +30,6 @@ class Q4_5Test {
                     Arguments.of(new TreeNode(3)
                             .left(new TreeNode(1).right(new TreeNode(2)))
                             .right(new TreeNode(4).right(new TreeNode(5))), true),
-                    //      3
-                    //   1     5
-                    //  0 2   4  6
-                    //     3
                     Arguments.of(new TreeNode(3)
                             .left(new TreeNode(1).left(new TreeNode(0)).right(new TreeNode(2).right(new TreeNode(3))))
                             .right(new TreeNode(5).left(new TreeNode(4)).right(new TreeNode(6))), false)

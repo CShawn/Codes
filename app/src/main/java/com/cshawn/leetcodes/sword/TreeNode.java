@@ -1,6 +1,8 @@
 package com.cshawn.leetcodes.sword;
 
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Queue;
 
 /**
  * @author C.Shawn
@@ -11,6 +13,39 @@ public class TreeNode {
     public TreeNode left;
     public TreeNode right;
     public TreeNode(int x) { val = x; }
+
+    public TreeNode(Integer[] array) {
+        if (array == null || array.length == 0) {
+            return;
+        }
+        if (array[0] != null) {
+            val = array[0];
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        if (array.length > 1) {
+            TreeNode node = array[1] != null ? new TreeNode(array[1]) : null;
+            left = node;
+            queue.add(node);
+        }
+        if (array.length > 2) {
+            TreeNode node = array[2] != null ? new TreeNode(array[2]) : null;
+            right = node;
+            queue.add(node);
+        }
+        int index = 3;
+        while (index < array.length) {
+            TreeNode lNode = array[index] != null ? new TreeNode(array[index]) : null;
+            queue.peek().left = lNode;
+            index++;
+            if (index < array.length) {
+                TreeNode rNode = array[index] != null ? new TreeNode(array[index]) : null;
+                queue.peek().right = rNode;
+                index++;
+            }
+            queue.poll();
+        }
+        queue.clear();
+    }
 
     public TreeNode left(TreeNode left) {
         this.left = left;
