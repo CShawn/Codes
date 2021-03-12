@@ -53,7 +53,8 @@ public class Q4_8 {
         return left || right || root == p || root == q;
     }
 
-    // 方法2
+    // 方法2：优化方法1，在一个节点左右子树中分别找到两个p,q时，则当前子树为最近公共祖先
+    // 在一侧找到p/q点时即停止，同时在另一侧未找到任一节点，则q/p必然在p/q的子树中，最近祖先为p/q
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == p || root == q || root == null) {
             return root;
