@@ -45,30 +45,39 @@ public class Q705 {
         LinkedList<Integer>[] arr;
         /** Initialize your data structure here. */
         public MyHashSet() {
-            arr = new LinkedList[1 << 1];
+            arr = new LinkedList[1 << 4];
         }
 
         public void add(int key) {
             int index = getIndex(key);
             if (arr[index] == null) {
                 arr[index] = new LinkedList<>();
-                used++;
             }
             if (!arr[index].contains(key)) {
                 arr[index].add(key);
             }
+            used++;
             // 扩容
             if ((float)used / arr.length >= loadFactor) {
                 int oldLength = arr.length;
-                LinkedList<Integer>[] copy = new LinkedList[oldLength];
-                System.arraycopy(arr, 0, copy, 0, oldLength);
-                arr = new LinkedList[oldLength << 1];
-                used = 0;
+                LinkedList<Integer>[] newArr = new LinkedList[oldLength << 1];
+                System.arraycopy(arr, 0, newArr, 0, oldLength);
+                arr = newArr;
+                // 扩容2倍，则length-1比之前多一位1，那么重新计算index要么与原来相同，要么前边多一位1
+                // 多一位1时，表示当前索引-之前索引=原length
                 for (int i = 0; i < oldLength; i++) {
-                    if (copy[i] != null) {
-                        Iterator<Integer> it = copy[i].iterator();
+                    if (newArr[i] != null) {
+                        Iterator<Integer> it = newArr[i].iterator();
                         while (it.hasNext()) {
-                            add(it.next());
+                            int value = it.next();
+                            int newIndex = getIndex(value);
+                            if (newIndex != i) {
+                                if (arr[newIndex] == null) {
+                                    arr[newIndex] = new LinkedList<>();
+                                }
+                                arr[newIndex].add(value);
+                                it.remove();
+                            }
                         }
                     }
                 }
@@ -79,9 +88,6 @@ public class Q705 {
             int index = getIndex(key);
             if (arr[index] != null) {
                 arr[index].remove(Integer.valueOf(key));
-                if (arr[index].isEmpty()) {
-                    used--;
-                }
             }
         }
 
