@@ -57,6 +57,16 @@ public class TreeNode {
         return this;
     }
 
+    public TreeNode left(int left) {
+        this.left = new TreeNode(left);
+        return this;
+    }
+
+    public TreeNode right(int right) {
+        this.right = new TreeNode(right);
+        return this;
+    }
+
     public int[] preOrder() {
         int[] result = new int[getCount(this)];
         preOrder(this, result, -1);
