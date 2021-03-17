@@ -28,7 +28,6 @@ public class Q5_3 {
         while (num != 0) {
             if ((num & 1) == 1) {
                 count++;
-                result = Math.max(result, count);
             } else {
                 result = Math.max(result, preCount + count);
                 preCount = count;
