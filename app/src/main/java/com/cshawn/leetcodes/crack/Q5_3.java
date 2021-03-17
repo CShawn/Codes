@@ -36,6 +36,7 @@ public class Q5_3 {
             }
             num >>>= 1;
         }
-        return result + 1;
+        result = Math.max(result, preCount + count);
+        return result < 32 ? result + 1 : result;
     }
 }
