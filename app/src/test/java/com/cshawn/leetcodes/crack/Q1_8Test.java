@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  * @author C.Shawn
  * @date 2021/2/24 8:00 下午
  */
-class Q1_8Test {
+public class Q1_8Test {
     public static class DataArgumentsProvider implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
@@ -25,7 +25,9 @@ class Q1_8Test {
                     Arguments.of(new int[][]{new int[]{1,0,0,4}, new int[]{5,6,0,8}, new int[]{9,10,11,12}, new int[]{13,14,15,16}},
                             new int[][]{new int[]{0,0,0,0}, new int[]{0,0,0,0}, new int[]{9,0,0,12}, new int[]{13,0,0,16}}),
                     Arguments.of(new int[][]{new int[]{0,1,2,0}, new int[]{3,4,5,2}, new int[]{1,3,1,5}},
-                            new int[][]{new int[]{0,0,0,0}, new int[]{0,4,5,0}, new int[]{0,3,1,0}})
+                            new int[][]{new int[]{0,0,0,0}, new int[]{0,4,5,0}, new int[]{0,3,1,0}}),
+                    Arguments.of(new int[][]{new int[]{1,2,3,4}, new int[]{5,0,7,8}, new int[]{0,10,11,12}, new int[]{13,14,15,0}},
+                            new int[][]{new int[]{0,0,3,0}, new int[]{0,0,0,0}, new int[]{0,0,0,0}, new int[]{0,0,0,0}})
             );
         }
     }
