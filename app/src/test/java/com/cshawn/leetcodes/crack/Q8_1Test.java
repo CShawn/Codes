@@ -13,6 +13,7 @@ class Q8_1Test {
     @ParameterizedTest
     @CsvSource({"1,1", "2,2", "3,4", "4,7", "5,13", "1000000,746580045"})
     void waysToStep(int n, int result) {
+        Assertions.assertEquals(result, new Q8_1().waysToStep1(n));
         Assertions.assertEquals(result, new Q8_1().waysToStep(n));
     }
 }
