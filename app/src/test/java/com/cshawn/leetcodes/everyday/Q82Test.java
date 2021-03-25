@@ -34,8 +34,22 @@ class Q82Test {
 
     @ParameterizedTest
     @ArgumentsSource(DataArgumentProvider.class)
-    void deleteDuplicates(ListNode list, int[] result) {
-        ListNode node = new Q82().deleteDuplicates(list);
+    void deleteDuplicates1(ListNode list, int[] result) {
+        ListNode node = new Q82().deleteDuplicates1(list);
+        Assertions.assertArrayEquals(result, node != null ? node.toArray() : new int[0]);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(DataArgumentProvider.class)
+    void deleteDuplicates2(ListNode list, int[] result) {
+        ListNode node = new Q82().deleteDuplicates2(list);
+        Assertions.assertArrayEquals(result, node != null ? node.toArray() : new int[0]);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(DataArgumentProvider.class)
+    void deleteDuplicates3(ListNode list, int[] result) {
+        ListNode node = new Q82().deleteDuplicates3(list);
         Assertions.assertArrayEquals(result, node != null ? node.toArray() : new int[0]);
     }
 }

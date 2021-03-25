@@ -20,7 +20,7 @@ import com.cshawn.leetcodes.sword.ListNode;
  * @date 2021/3/25 8:31 上午
  */
 public class Q82 {
-    public ListNode deleteDuplicates(ListNode head) {
+    public ListNode deleteDuplicates1(ListNode head) {
         if (head == null || head.next == null) {
             return head;
         }
@@ -61,6 +61,68 @@ public class Q82 {
             // 将最后的几个元素删除
             last.next = null;
             pre.next = null;
+        }
+        return fake.next;
+    }
+
+    // 数值不同时创建新节点
+    public ListNode deleteDuplicates2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode fake = new ListNode(0);
+        fake.next = new ListNode(head.val);
+        // 新链表的最后一个节点
+        ListNode end = fake.next;
+        // 最后一个节点的前驱节点，用于删除最后一个节点
+        ListNode pre = fake;
+        ListNode cur = head.next;
+        // 记录当前可能的相同数值
+        int same = head.val;
+        while (cur != null) {
+            // 不相同时，创建新节点
+            if (cur.val != same) {
+                end.next = new ListNode(cur.val);
+                // 更新最后节点
+                pre = end;
+                end = end.next;
+                same = cur.val;
+            } else if (end.val == same) {
+                // 当新链表的最后一个元素与当前要删除的数值相同时，将删除
+                pre.next = null;
+                // 更新最后节点
+                end = pre;
+            }
+            cur = cur.next;
+        }
+        return fake.next;
+    }
+
+    // 数值相同时不断向后查找不同的节点
+    public ListNode deleteDuplicates3(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode fake = new ListNode(0);
+        fake.next = head;
+        ListNode pre = fake;
+        ListNode cur = head;
+        while (cur != null) {
+            while (cur.next != null && cur.next.val == cur.val) {
+                cur = cur.next;
+            }
+            // 上述while结束后cur为重复元素的最后一个元素
+            if (pre.next == cur) {
+                // 说明pre和cur之间没有重复元素
+                pre = pre.next;
+                cur = cur.next;
+            } else {
+                // 将中间元素全部删除
+                pre.next = cur.next;
+                // 将要删除的链表断开，也可以不删除
+                cur.next = null;
+                cur = pre.next;
+            }
         }
         return fake.next;
     }
