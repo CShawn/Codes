@@ -126,4 +126,21 @@ public class Q82 {
         }
         return fake.next;
     }
+
+    // 递归
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        if (head.next.val != head.val) {
+            head.next = deleteDuplicates(head.next);
+        } else {
+            ListNode temp = head.next;
+            while (temp != null && temp.val == head.val) {
+                temp = temp.next;
+            }
+            return deleteDuplicates(temp);
+        }
+        return head;
+    }
 }

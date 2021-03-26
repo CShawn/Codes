@@ -62,4 +62,21 @@ public class Q456 {
         }
         return false;
     }
+
+//    public boolean find132pattern2(int[] nums) {
+//        int len=nums.length;
+//        if(len<3) return false;
+//        Stack<Integer> st=new Stack<>();
+//        int K=-1;
+//        for (int I = len - 1; I >= 0; I--) {
+//            if (K > -1 && nums[K] > nums[I]) {
+//                return true;
+//            }
+//            while (!st.isEmpty() && nums[st.peek()] < nums[I]) {
+//                K = st.pop();
+//            }
+//            st.push(I);
+//        }
+//        return false;
+//    }
 }
