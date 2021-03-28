@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class Q343Test {
 
     @ParameterizedTest
-    @CsvSource({"2,1", "10,36"})
+    @CsvSource({"2,1", "4,4", "9,27", "10,36"})
     void integerBreak(int n, int result) {
         Assertions.assertEquals(result, new Q343().integerBreak1(n));
         Assertions.assertEquals(result, new Q343().integerBreak2(n));

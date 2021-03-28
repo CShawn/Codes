@@ -85,10 +85,10 @@ public class Q343 {
     }
 
     private int pow(int n, int pow) {
-        int result = 0;
+        int result = 1;
         while (pow != 0) {
             if ((pow & 1) == 1) {
-                result += n;
+                result *= n;
             }
             n *= n;
             pow >>= 1;
