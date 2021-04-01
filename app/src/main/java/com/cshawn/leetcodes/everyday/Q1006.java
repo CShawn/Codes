@@ -130,7 +130,7 @@ public class Q1006 {
         }
     }
 
-    // 这个方法没看懂
+    // 优化方法3
     public int clumsy(int N) {
         int[] num = {1, 2, 2, -1};
         return N > 4 ? N + num[N % 4] : (N > 2 ? N + 3 : N);
