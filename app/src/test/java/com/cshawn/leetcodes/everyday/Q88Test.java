@@ -28,6 +28,13 @@ class Q88Test {
 
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
+    void merge1(int[] nums1, int m, int[] nums2, int n, int[] result) {
+        new Q88().merge1(nums1, m, nums2, n);
+        Assertions.assertArrayEquals(result, nums1);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(DataArgumentsProvider.class)
     void merge(int[] nums1, int m, int[] nums2, int n, int[] result) {
         new Q88().merge(nums1, m, nums2, n);
         Assertions.assertArrayEquals(result, nums1);

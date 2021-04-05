@@ -26,13 +26,24 @@ package com.cshawn.leetcodes.everyday;
  * @date 2021/4/5 7:08 下午
  */
 public class Q88 {
-    public void merge(int[] nums1, int m, int[] nums2, int n) {
+    public void merge1(int[] nums1, int m, int[] nums2, int n) {
         int index = nums1.length - 1, i = m - 1, j = n - 1;
         while (i >= 0 && j >= 0) {
             nums1[index--] = nums1[i] < nums2[j] ? nums2[j--] : nums1[i--];
         }
         while (j >= 0) {
             nums1[index--] = nums2[j--];
+        }
+    }
+
+    // 优化方法1，不定义新变量
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int index = nums1.length - 1;
+        while (m > 0 && n > 0) {
+            nums1[index--] = nums1[m - 1] < nums2[n - 1] ? nums2[--n] : nums1[--m];
+        }
+        while (n > 0) {
+            nums1[index--] = nums2[--n];
         }
     }
 }
