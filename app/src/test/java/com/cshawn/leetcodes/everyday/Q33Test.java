@@ -1,16 +1,12 @@
 package com.cshawn.leetcodes.everyday;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author C.Shawn
@@ -24,10 +20,12 @@ class Q33Test {
             return Stream.of(
 //                    Arguments.of(new int[]{4,5,6,7,0,1,2}, 0, 4),
 //                    Arguments.of(new int[]{4,5,6,7,0,1,2}, 3, -1),
-                    Arguments.of(new int[]{0,1,2,4,5,6,7}, 2, 2),
-                    Arguments.of(new int[]{0,1,2,4,5,6,7}, 0, 0),
-                    Arguments.of(new int[]{0,1,2,4,5,6,7}, 7, 6),
-                    Arguments.of(new int[]{4}, 3, -1)
+//                    Arguments.of(new int[]{0,1,2,4,5,6,7}, 2, 2),
+//                    Arguments.of(new int[]{0,1,2,4,5,6,7}, 0, 0),
+//                    Arguments.of(new int[]{0,1,2,4,5,6,7}, 7, 6),
+//                    Arguments.of(new int[]{4}, 3, -1),
+                    Arguments.of(new int[]{3,1}, 1, 1),
+                    Arguments.of(new int[0], 3, -1)
             );
         }
     }
@@ -35,6 +33,7 @@ class Q33Test {
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
     void search(int[] nums, int target, int result) {
+        Assertions.assertEquals(result, new Q33().search1(nums, target));
         Assertions.assertEquals(result, new Q33().search(nums, target));
     }
 }
