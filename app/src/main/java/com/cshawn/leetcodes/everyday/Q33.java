@@ -61,7 +61,7 @@ public class Q33 {
     public int search(int[] nums, int target) {
         int result = -1;
         int left = 0, right = nums.length - 1, mid;
-        while(left <= right){
+        while(left <= right) {
             mid = left + ((right - left) >> 1);
             if(target == nums[mid]){
                 return mid;
