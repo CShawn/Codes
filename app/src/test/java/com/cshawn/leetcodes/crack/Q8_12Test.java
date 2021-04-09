@@ -32,6 +32,17 @@ class Q8_12Test {
 
     @ParameterizedTest
     @ArgumentsSource(DataArgumentProvider.class)
+    void solveNQueens1(int n, String[][] result) {
+        List<List<String>> res = new Q8_12().solveNQueens1(n);
+        String[][] convert = new String[res.size()][n];
+        for (int i = 0; i < res.size(); i++) {
+            convert[i] = res.get(i).toArray(new String[0]);
+        }
+        Assertions.assertArrayEquals(result, convert);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(DataArgumentProvider.class)
     void solveNQueens(int n, String[][] result) {
         List<List<String>> res = new Q8_12().solveNQueens(n);
         String[][] convert = new String[res.size()][n];
