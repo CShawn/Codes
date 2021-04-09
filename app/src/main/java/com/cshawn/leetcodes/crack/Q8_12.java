@@ -1,6 +1,7 @@
 package com.cshawn.leetcodes.crack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -55,8 +56,9 @@ public class Q8_12 {
      */
     private void backtracking(List<List<String>> result, int index, int[] rows) {
         if (index == rows.length) {
-            StringBuilder sb = new StringBuilder();
             List<String> rowStr = new ArrayList<>(rows.length);
+            /*
+            StringBuilder sb = new StringBuilder();
             // 填充每行Q的位置
             for (int row : rows) {
                 sb.delete(0, sb.length());
@@ -68,6 +70,14 @@ public class Q8_12 {
                     sb.append('.');
                 }
                 rowStr.add(sb.toString());
+            }
+            */
+            // 优化每行的填充
+            for (int row : rows) {
+                char[] queen = new char[rows.length];
+                Arrays.fill(queen, '.');
+                queen[row] = 'Q';
+                rowStr.add(new String(queen));
             }
             result.add(rowStr);
             return;
