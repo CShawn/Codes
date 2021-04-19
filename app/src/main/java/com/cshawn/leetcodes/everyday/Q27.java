@@ -62,6 +62,28 @@ public class Q27 {
         return right + 1;
     }
 
+    public int removeElement2(int[] nums, int val) {
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            if (left == right) {
+                return nums[left] == val ? left : left + 1;
+            }
+            // 找到最后一个不是val的值
+            while (left < right && nums[right] == val) {
+                right--;
+            }
+            // 找到第一个val
+            while (left < right && nums[left] != val) {
+                left++;
+            }
+            // 将left赋值为right的值，并移动两个指针
+            if (left < right) {
+                nums[left++] = nums[right--];
+            }
+        }
+        return left;
+    }
+
     public int removeElement(int[] nums, int val) {
         int left = 0, right = nums.length;
         while (left < right) {
