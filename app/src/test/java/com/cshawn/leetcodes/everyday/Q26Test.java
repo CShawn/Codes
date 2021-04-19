@@ -35,6 +35,15 @@ class Q26Test {
 
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
+    void removeDuplicates2(int[] nums, int result, int[] array) {
+        new Q26().removeDuplicates2(nums);
+        int[] sub = new int[result];
+        System.arraycopy(nums, 0, sub, 0, result);
+        Assertions.assertArrayEquals(sub, array);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(DataArgumentsProvider.class)
     void removeDuplicates(int[] nums, int result, int[] array) {
         new Q26().removeDuplicates(nums);
         int[] sub = new int[result];

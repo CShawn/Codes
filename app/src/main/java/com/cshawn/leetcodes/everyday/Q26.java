@@ -44,6 +44,22 @@ public class Q26 {
         if (nums.length < 2) {
             return nums.length;
         }
+        int index = 0;
+        for (int i = 1; i < nums.length; i++) {
+            while (i < nums.length && nums[i] == nums[index]) {
+                i++;
+            }
+            if (i < nums.length) {
+                nums[++index] = nums[i];
+            }
+        }
+        return index + 1;
+    }
+
+    public int removeDuplicates2(int[] nums) {
+        if (nums.length < 2) {
+            return nums.length;
+        }
         int index = 1;
         for (int i = 1; i < nums.length; i++) {
             if (nums[i] != nums[i - 1]) {
