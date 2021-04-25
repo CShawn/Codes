@@ -35,12 +35,24 @@ public class TreeNode {
         int index = 3;
         while (index < array.length) {
             TreeNode lNode = array[index] != null ? new TreeNode(array[index]) : null;
-            queue.peek().left = lNode;
+            if (queue.isEmpty()) {
+                continue;
+            }
+            TreeNode top = queue.peek();
+            if (top == null) {
+                queue.poll();
+                continue;
+            }
+            top.left = lNode;
+            queue.add(lNode);
             index++;
             if (index < array.length) {
                 TreeNode rNode = array[index] != null ? new TreeNode(array[index]) : null;
-                queue.peek().right = rNode;
+                if (!queue.isEmpty()) {
+                    top.right = rNode;
+                }
                 index++;
+                queue.add(rNode);
             }
             queue.poll();
         }
