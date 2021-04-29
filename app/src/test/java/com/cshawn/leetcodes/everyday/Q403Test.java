@@ -31,6 +31,7 @@ class Q403Test {
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
     void canCross(int[] stones, boolean result) {
+        Assertions.assertEquals(result, new Q403().canCross1(stones));
         Assertions.assertEquals(result, new Q403().canCross(stones));
     }
 }

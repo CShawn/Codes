@@ -30,8 +30,8 @@ import java.util.Arrays;
  * @date 2021/4/29 5:08 下午
  */
 public class Q403 {
-    // 记忆化搜索+二分查找
-    public boolean canCross(int[] stones) {
+    // 方法1：记忆化搜索+二分查找
+    public boolean canCross1(int[] stones) {
         Boolean[][] dp = new Boolean[stones.length][stones.length];
         return dfs(stones, dp, 0, 0);
     }
@@ -58,6 +58,36 @@ public class Q403 {
             }
         }
         dp[index][k] = false;
+        return false;
+    }
+
+    // 方法2：动态规划
+    public boolean canCross(int[] stones) {
+        // dp[i][k]表示上一次跳k步能否到达i
+        // dp[i][k] = dp[j][k - 1] || dp[j][k] || dp[j][k + 1];其中i - j = k
+        boolean[][] dp = new boolean[stones.length][stones.length + 1];
+        // 初始第一块可达
+        dp[0][0] = true;
+        // 先判断数组是否有明显的不可到达条件
+        for (int i = 1; i < stones.length; i++) {
+            // 当相邻的两块石头相差大于其位置，则必然无法到达
+            if (stones[i] - stones[i - 1] > i) {
+                return false;
+            }
+        }
+        for (int i = 1; i < stones.length; i++) {
+            for (int j = i - 1; j >= 0; j--) {
+                int k = stones[i] - stones[j];
+                // 相差较大，停止继续计算
+                if (k > j + 1) {
+                    break;
+                }
+                dp[i][k] = dp[j][k - 1] || dp[j][k] || dp[j][k + 1];
+                if (i == stones.length - 1 && dp[i][k]) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }
