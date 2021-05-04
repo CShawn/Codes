@@ -1,9 +1,9 @@
 package com.cshawn.leetcodes.everyday;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Integer;
 /**
  * 员工的重要性
  * 给定一个保存员工信息的数据结构，它包含了员工唯一的id，重要度和直系下属的id 。
@@ -41,7 +41,7 @@ class Q690 {
         if (e == null) {
             return 0;
         }
-        return getImportance(map,  id);
+        return dfs(map,  id);
     }
     
     private int dfs(Map<Integer, Employee> map, int id) {
@@ -56,9 +56,15 @@ class Q690 {
         return result;
     }
 
-    class Employee {
+    static class Employee {
         public int id;
         public int importance;
     	public List<Integer> subordinates;
+
+    	public Employee(int id, int im, Integer... sub) {
+    	    this.id = id;
+    	    importance = im;
+    	    subordinates = Arrays.asList(sub);
+        }
     }
 }

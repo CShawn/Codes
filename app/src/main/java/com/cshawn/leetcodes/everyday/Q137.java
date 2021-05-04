@@ -1,11 +1,13 @@
 package com.cshawn.leetcodes.everyday;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 只出现一次的数字II
  * 给你一个整数数组nums，除某个元素仅出现一次外，其余每个元素都恰出现三次。请你找出并返回那个只出现了一次的元素。
  * 
  * 示例 1：
- * 
  * 输入：nums = [2,2,3,2]
  * 输出：3
  * 
@@ -14,7 +16,6 @@ package com.cshawn.leetcodes.everyday;
  * 输出：99
  * 
  * 提示：
- * 
  * 1 <= nums.length <= 3 * 104
  * -231 <= nums[i] <= 231 - 1
  * nums 中，除某个元素仅出现 一次 外，其余每个元素都恰出现 三次
@@ -27,12 +28,12 @@ class Q137 {
     // 方法1：散列表
     public int singleNumber1(int[] nums) {
         Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-        	map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
-        for (int i = 0; i < nums.length; i++) {
-            if (map.get(nums[i]) == 1) {
-                return nums[i];
+        for (int num : nums) {
+            if (map.get(num) == 1) {
+                return num;
             }
         }
         return 0;
