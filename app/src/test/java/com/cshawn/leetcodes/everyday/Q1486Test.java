@@ -13,6 +13,7 @@ class Q1486Test {
     @ParameterizedTest
     @CsvSource({"5,0,8", "4,3,8", "1,7,7", "10,5,2"})
     void xorOperation(int n, int start , int result) {
+        Assertions.assertEquals(result, new Q1486().xorOperation1(n, start));
         Assertions.assertEquals(result, new Q1486().xorOperation(n, start));
     }
 }
