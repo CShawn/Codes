@@ -63,7 +63,7 @@ public class Q1269 {
         for (int step = 1; step <= steps; step++) {
             int bit = step & 1;
             int other = bit ^ 1;
-            for (int i = 1; i < dp[bit].length - 1; i++) {
+            for (int i = 1; i < dp[bit].length - 1 && i <= step + 1; i++) {
                 dp[bit][i] = ((dp[other][i - 1] + dp[other][i]) % 1000000007 + dp[other][i + 1]) % 1000000007;
             }
         }
