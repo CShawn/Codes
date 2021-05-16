@@ -41,7 +41,7 @@ import java.util.Set;
 public class Q421 {
     // 两两异或，复杂度为O(N^2), 必然超时
     // 按位运算，降为32N(int为32位)
-    public int findMaximumXOR(int[] nums) {
+    public int findMaximumXOR1(int[] nums) {
         Set<Integer> set = new HashSet<>();
         int x = 0;
         // 保留每个数字的高k位，判断是否含1
@@ -51,7 +51,7 @@ public class Q421 {
                 set.add(num >> k);
             }
             // 将x右边添加一位1
-            int xNext = (x << 1) + 1;
+            int xNext = (x << 1) | 1;
             boolean found = false;
             for (int num : nums) {
                 // set包含xNext ^ (num >> k),意思是set中一个数异或num >> k，得到xNext
@@ -63,6 +63,33 @@ public class Q421 {
             }
             // 存在时，可累计x；不存在时，末位取0
             x = found ? xNext : x << 1;
+        }
+        return x;
+    }
+
+    // 优化方法1，异或最大值必然为数组最大值和其中一个值的异或
+    public int findMaximumXOR(int[] nums) {
+        int max = nums[0];
+        for (int num : nums) {
+            max = Math.max(num, max);
+        }
+        Set<Integer> set = new HashSet<>();
+        int x = 0;
+        // 保留每个数字的高k位，判断是否含1
+        for (int k = 31 - Integer.numberOfLeadingZeros(max); k >= 0; k--) {
+            set.clear();
+            x <<= 1;
+            // 将x右边添加一位1
+            int xNext = x | 1;
+            for (int num : nums) {
+                set.add(num >> k);
+                // set包含xNext ^ (num >> k),意思是set中一个数异或num >> k，得到xNext
+                // 也就是说，存在两个数异或后得到xNext
+                if (set.contains(xNext ^ (num >> k))) {
+                    x |= 1;
+                    break;
+                }
+            }
         }
         return x;
     }

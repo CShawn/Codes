@@ -30,6 +30,7 @@ class Q421Test {
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
     void findMaximumXOR(int[] nums, int result) {
+        Assertions.assertEquals(result, new Q421().findMaximumXOR1(nums));
         Assertions.assertEquals(result, new Q421().findMaximumXOR(nums));
     }
 }
