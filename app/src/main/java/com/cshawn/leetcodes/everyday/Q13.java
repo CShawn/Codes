@@ -56,8 +56,7 @@ package com.cshawn.leetcodes.everyday;
  * @date 2021/5/15 10:15 上午
  */
 public class Q13 {
-    public int romanToInt1(String s) {
-        char[] value = new char[]{'I', 'V', 'X', 'L', 'C', 'D', 'M'};
+    public int romanToInt(String s) {
         int result = 0;
         for (int i = 0; i < s.length(); i++) {
             switch (s.charAt(i)) {
