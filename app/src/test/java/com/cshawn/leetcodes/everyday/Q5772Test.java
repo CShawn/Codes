@@ -14,5 +14,6 @@ class Q5772Test {
     @CsvSource({"acb,cba,cdb,true", "aaa,a,aab,false", "aaa,a,aaaa,true"})
     void isSumEqual(String firstWord, String secondWord, String targetWord, boolean result) {
         Assertions.assertEquals(result, new Q5772().isSumEqual(firstWord, secondWord, targetWord));
+        Assertions.assertEquals(result, new Q5772().isSumEqual2(firstWord, secondWord, targetWord));
     }
 }

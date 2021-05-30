@@ -51,11 +51,23 @@ public class Q5772 {
         return getValue(firstWord, sb) + getValue(secondWord, sb) == getValue(targetWord, sb);
     }
 
+    public boolean isSumEqual2(String firstWord, String secondWord, String targetWord) {
+        return getValue2(firstWord) + getValue2(secondWord) == getValue2(targetWord);
+    }
+
     private int getValue(String word, StringBuilder sb) {
         sb.setLength(0);
         for (int i = 0; i < word.length(); i++) {
             sb.append(word.charAt(i) - 'a');
         }
         return Integer.parseInt(sb.toString());
+    }
+
+    private int getValue2(String word) {
+        int result = 0;
+        for (int i = 0; i < word.length(); i++) {
+            result += (word.charAt(i) - 'a') * 10;
+        }
+        return result;
     }
 }
