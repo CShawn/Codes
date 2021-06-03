@@ -10,25 +10,29 @@ import java.util.stream.Stream;
 
 /**
  * @author C.Shawn
- * @date 2021/6/2 7:59 下午
+ * @date 2021/6/3 8:59 下午
  */
-class Q523Test {
-
+class Q525Test {
     static class DataArgumentsProvider implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
-                    Arguments.of(new int[]{23,2,4,6,7}, 6, true),
-                    Arguments.of(new int[]{23,2,6,4,7}, 6, true),
-                    Arguments.of(new int[]{23,2,6,4,7}, 13, false),
-                    Arguments.of(new int[]{23,2,4,6,6}, 7, true)
+                    Arguments.of(new int[]{0,1}, 2),
+                    Arguments.of(new int[]{0,1,0}, 2),
+                    Arguments.of(new int[]{0,0}, 0),
+                    Arguments.of(new int[]{1,1,1}, 0),
+                    Arguments.of(new int[]{1,1,1,0,0}, 4),
+                    Arguments.of(new int[]{1,1,1,0,0,0,1}, 6),
+                    Arguments.of(new int[]{1,1,1,1,0}, 2),
+                    Arguments.of(new int[]{1,1,1,0,0,0,1,0}, 8)
             );
         }
     }
 
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
-    void checkSubarraySum(int[] nums, int k, boolean result) {
-        Assertions.assertEquals(result, new Q523().checkSubarraySum(nums, k));
+    void findMaxLength(int[] nums, int result) {
+        Assertions.assertEquals(result, new Q525().findMaxLength1(nums));
+        Assertions.assertEquals(result, new Q525().findMaxLength(nums));
     }
 }
