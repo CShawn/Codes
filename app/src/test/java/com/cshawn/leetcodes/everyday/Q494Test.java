@@ -10,25 +10,26 @@ import java.util.stream.Stream;
 
 /**
  * @author C.Shawn
- * @date 2021/6/6 22:16
+ * @date 2021/6/7 7:11 下午
  */
-public class Q474Test {
+class Q494Test {
     static class DataArgumentsProvider implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
-                    Arguments.arguments(new String[0], 2, 4, 0),
-                    Arguments.arguments(new String[]{"10", "0001", "111001", "1", "0"}, 5, 3, 4),
-                    Arguments.arguments(new String[]{"10", "0", "1"}, 1, 1, 2)
+                    Arguments.of(new int[]{1,1,1,1,1}, 3, 5),
+                    Arguments.of(new int[]{1}, 1, 1),
+                    Arguments.of(new int[]{1,1,1,1,1,2,4,2,5,6,1,1}, 14, 129)
             );
         }
     }
 
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
-    void findMaxForm(String[] strs, int m, int n, int result) {
-        Assertions.assertEquals(result, new Q474().findMaxForm1(strs, m, n));
-        Assertions.assertEquals(result, new Q474().findMaxForm2(strs, m, n));
-        Assertions.assertEquals(result, new Q474().findMaxForm(strs, m, n));
+    void findTargetSumWays(int[] nums, int target, int result) {
+        Assertions.assertEquals(result, new Q494().findTargetSumWays1(nums, target));
+        Assertions.assertEquals(result, new Q494().findTargetSumWays2(nums, target));
+        Assertions.assertEquals(result, new Q494().findTargetSumWays3(nums, target));
+        Assertions.assertEquals(result, new Q494().findTargetSumWays(nums, target));
     }
 }

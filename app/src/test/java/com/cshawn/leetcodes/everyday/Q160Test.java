@@ -19,36 +19,36 @@ class Q160Test {
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             ListNode common = new ListNode(7).next(8).next(9);
             return Stream.of(
-//                    Arguments.arguments(
-//                            new ListNode(1).next(2).next(common),
-//                            null,
-//                            null
-//                    ),
-//                    Arguments.arguments(
-//                            null,
-//                            new ListNode(1).next(2).next(common),
-//                            null
-//                    ),
-//                    Arguments.arguments(
-//                            null,
-//                            null,
-//                            null
-//                    ),
-//                    Arguments.arguments(
-//                            new ListNode(1).next(2).next(common),
-//                            new ListNode(3).next(4).next(5).next(common),
-//                            common
-//                    ),
-//                    Arguments.arguments(
-//                            new ListNode(1).next(2).next(common),
-//                            new ListNode(3).next(4).next(common),
-//                            common
-//                    ),
-//                    Arguments.arguments(
-//                            common,
-//                            common,
-//                            common
-//                    ),
+                    Arguments.arguments(
+                            new ListNode(1).next(2).next(common),
+                            null,
+                            null
+                    ),
+                    Arguments.arguments(
+                            null,
+                            new ListNode(1).next(2).next(common),
+                            null
+                    ),
+                    Arguments.arguments(
+                            null,
+                            null,
+                            null
+                    ),
+                    Arguments.arguments(
+                            new ListNode(1).next(2).next(common),
+                            new ListNode(3).next(4).next(5).next(common),
+                            common
+                    ),
+                    Arguments.arguments(
+                            new ListNode(1).next(2).next(common),
+                            new ListNode(3).next(4).next(common),
+                            common
+                    ),
+                    Arguments.arguments(
+                            common,
+                            common,
+                            common
+                    ),
                     Arguments.arguments(
                             new ListNode(1).next(2).next(3),
                             new ListNode(3).next(4),
