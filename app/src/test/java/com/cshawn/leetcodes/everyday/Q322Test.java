@@ -30,6 +30,6 @@ public class Q322Test {
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
     void coinChange(int[] coins, int amount, int result) {
-        Assertions.assertEqulas(result, new Q322().coinChange(coins, amount));
+        Assertions.assertEquals(result, new Q322().coinChange(coins, amount));
     }
 }
