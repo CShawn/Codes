@@ -1,6 +1,5 @@
 package com.cshawn.leetcodes.everyday;
 
-import com.cshawn.leetcodes.sword.TreeNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
