@@ -71,7 +71,19 @@ public class Q62 {
         return dp[(m - 1) & 1][n - 1];
     }
 
-    // 方法3：数学，排列组合
+    // 方法3：优化空间，优化为一维
+    public int uniquePaths3(int m, int n) {
+        int[] dp = new int[n];
+        dp[0] = 1;
+        for (int i = 0; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[j] = dp[j - 1] + dp[j];
+            }
+        }
+        return dp[n - 1];
+    }
+
+    // 方法4：数学，排列组合
     // 共可以向下走m-1向右走n-1，共计m+n-2步，排列组合为C(m+n-2, m-1)种
     public int uniquePaths(int m, int n) {
         long result = 1;

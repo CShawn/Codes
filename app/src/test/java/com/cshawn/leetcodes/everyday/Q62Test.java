@@ -14,6 +14,7 @@ class Q62Test {
     void uniquePaths(int m, int n, int result) {
         Assertions.assertEquals(result, new Q62().uniquePaths1(m, n));
         Assertions.assertEquals(result, new Q62().uniquePaths2(m, n));
+        Assertions.assertEquals(result, new Q62().uniquePaths3(m, n));
         Assertions.assertEquals(result, new Q62().uniquePaths(m, n));
     }
 }
