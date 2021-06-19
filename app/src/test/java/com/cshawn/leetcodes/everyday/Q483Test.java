@@ -15,6 +15,5 @@ class Q483Test {
     void smallestGoodBase1(String n, String result) {
         Assertions.assertEquals(result, new Q483().smallestGoodBase1(n));
         Assertions.assertEquals(result, new Q483().smallestGoodBase(n));
-        Assertions.assertEquals(result, new Q483().smallestGoodBase2(n));
     }
 }
