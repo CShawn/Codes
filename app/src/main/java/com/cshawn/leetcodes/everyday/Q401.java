@@ -30,7 +30,8 @@ import java.util.List;
  * @date 2021/6/21 5:40 下午
  */
 public class Q401 {
-    public List<String> readBinaryWatch(int turnedOn) {
+    // 方法1：遍历所有可能
+    public List<String> readBinaryWatch1(int turnedOn) {
         List<String> result = new LinkedList<>();
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 60; j++) {
@@ -40,5 +41,45 @@ public class Q401 {
             }
         }
         return result;
+    }
+
+    // 方法2：回溯法
+    private int[] minutes = new int[]{1, 2, 4, 8, 16, 32};
+    public List<String> readBinaryWatch(int turnedOn) {
+        List<String> result = new LinkedList<>();
+        int min = turnedOn > 6 ? turnedOn - 6 : 0;
+        int max = Math.min(4, turnedOn);
+        LinkedList<Integer>[] temp = new LinkedList[7];
+        for (int i = min; i < temp.length; i++) {
+            // i + 1 个1组成的数字
+            temp[i] = new LinkedList<>();
+            backTracking(temp[i], i, 0, 0, 0);
+        }
+        for (int i = min; i <= max; i++) {
+            for (Integer hour : temp[i]) {
+                if (hour < 12) {
+                    for (Integer minute: temp[turnedOn - i]) {
+                        if (minute < 60) {
+                            if (minute < 10) {
+                                result.add(hour + ":0" + minute);
+                            } else {
+                                result.add(hour + ":" + minute);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private void backTracking(List<Integer> result, int count, int index, int preCount, int pre) {
+        if (preCount == count) {
+            result.add(pre);
+            return;
+        }
+        for (int i = index; i < minutes.length; i++) {
+            backTracking(result, count, i + 1, preCount + 1, pre + minutes[i]);
+        }
     }
 }
