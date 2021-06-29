@@ -38,8 +38,8 @@ import java.util.*;
  * @date 2021/6/26 3:13 下午
  */
 public class Q773 {
-    // 广度优先遍历
-    public int slidingPuzzle(int[][] board) {
+    // 方法1：广度优先遍历
+    public int slidingPuzzle1(int[][] board) {
         StringBuilder sb = new StringBuilder();
         for (int[] ints : board) {
             for (int i : ints) {
@@ -60,7 +60,7 @@ public class Q773 {
             result++;
             int size = queue.size();
             for (int i = 0; i < size; i++) {
-                for (String s : getNext(queue.poll())) {
+                for (String s : getNext1(queue.poll())) {
                     if (!checked.contains(s)) {
                         if (target.equals(s)) {
                             return result;
@@ -74,7 +74,7 @@ public class Q773 {
         return -1;
     }
 
-    private List<String> getNext(String board) {
+    private List<String> getNext1(String board) {
         List<String> list = new LinkedList<>();
         int zero = board.indexOf('0');
         char[] arr = board.toCharArray();
@@ -141,5 +141,78 @@ public class Q773 {
         char t = arr[a];
         arr[a] = arr[b];
         arr[b] = t;
+    }
+
+    // 方法2：A*
+    public int slidingPuzzle(int[][] board) {
+        StringBuilder sb = new StringBuilder();
+        for (int[] ints : board) {
+            for (int i : ints) {
+                sb.append(i);
+            }
+        }
+        String target = "123450";
+        String init = sb.toString();
+        if (init.equals(target)) {
+            return 0;
+        }
+        AStar.col = board[0].length;
+        PriorityQueue<AStar> queue = new PriorityQueue<>((o1, o2) -> o1.f - o2.f);
+        Set<String> checked = new HashSet<>();
+        queue.offer(new AStar(init, 0));
+        checked.add(init);
+        while (!queue.isEmpty()) {
+            AStar item = queue.poll();
+            for (String next : getNext(item.status)) {
+                if (!checked.contains(next)) {
+                    if (target.equals(next)) {
+                        return item.g + 1;
+                    }
+                    queue.offer(new AStar(next, item.g + 1));
+                    checked.add(next);
+                }
+            }
+        }
+        return -1;
+    }
+
+    static class AStar {
+        public String status;
+        public int g, f, h;
+        public static int col;
+
+        public AStar(String status, int g) {
+            this.status = status;
+            this.g = g;
+            this.h = getH(status);
+            this.f = this.g + this.h;
+        }
+        // 启发函数为曼哈顿距离
+        public int getH(String status) {
+            int res = 0;
+            for (int i = 0; i < status.length(); i++) {
+                int n = status.charAt(i) - '0';
+                if (n != 0) {
+                    int x = i / col, y = i % col;
+                    int real = n - 1;
+                    int realX = real / col, realY = real % col;
+                    res += Math.abs(x - realX) + Math.abs(y - realY);
+                }
+            }
+            return res;
+        }
+    }
+
+    private int[][] nexts = new int[][]{{1,3}, {0,2,4}, {1,5}, {0,4}, {1,3,5}, {2,4}};
+    private List<String> getNext(String board) {
+        List<String> list = new LinkedList<>();
+        int zero = board.indexOf('0');
+        char[] arr = board.toCharArray();
+        for (int t : nexts[zero]) {
+            swap(arr, zero, t);
+            list.add(new String(arr));
+            swap(arr, zero, t);
+        }
+        return list;
     }
 }

@@ -27,6 +27,7 @@ class Q773Test {
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
     void slidingPuzzle(int[][] board, int result) {
+        Assertions.assertEquals(result, new Q773().slidingPuzzle1(board));
         Assertions.assertEquals(result, new Q773().slidingPuzzle(board));
     }
 }
