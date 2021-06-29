@@ -29,6 +29,8 @@ class Q752Test {
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
     void openLock(String[] deadends, String target, int result) {
+        Assertions.assertEquals(result, new Q752().openLock1(deadends, target));
+        Assertions.assertEquals(result, new Q752().openLock2(deadends, target));
         Assertions.assertEquals(result, new Q752().openLock(deadends, target));
     }
 }

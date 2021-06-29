@@ -47,8 +47,8 @@ import java.util.*;
  * @date 2021/6/25 7:40 下午
  */
 public class Q752 {
-    // 广度优先遍历
-    public int openLock(String[] deadends, String target) {
+    // 方法1：广度优先遍历
+    public int openLock1(String[] deadends, String target) {
         if (target.equals("0000")) {
             return 0;
         }
@@ -68,7 +68,7 @@ public class Q752 {
             step++;
             int size = queue.size();
             for (int i = 0; i < size; i++) {
-                for (String s : getNext(queue.poll())) {
+                for (String s : getNext1(queue.poll())) {
                     if (!checked.contains(s) && !dead.contains(s)) {
                         if (s.equals(target)) {
                             return step;
@@ -82,7 +82,7 @@ public class Q752 {
         return -1;
     }
 
-    private String[] getNext(String s) {
+    private String[] getNext1(String s) {
         char[] arr = s.toCharArray();
         String[] result = new String[8];
         for (int i = 0; i < 4; i++) {
@@ -107,5 +107,189 @@ public class Q752 {
             }
         }
         return result;
+    }
+
+    // 方法2：A*算法
+    public int openLock2(String[] deadends, String target) {
+        String init = "0000";
+        if (init.equals(target)) {
+            return 0;
+        }
+        Set<String> dead = new HashSet<>();
+        for (String s : deadends) {
+            dead.add(s);
+        }
+        if (dead.contains("0000")) {
+            return -1;
+        }
+        PriorityQueue<AStar> pq = new PriorityQueue<>((o1, o2) -> o1.f - o2.f);
+        pq.offer(new AStar(init, target, 0));
+        Set<String> seen = new HashSet<>();
+        seen.add(init);
+        while (!pq.isEmpty()) {
+            AStar a = pq.poll();
+            for (String next : getNext(a.status)) {
+                if (!dead.contains(next) && !seen.contains(next)) {
+                    if (target.equals(next)) {
+                        return a.g + 1;
+                    }
+                    pq.offer(new AStar(next, target, a.g + 1));
+                    seen.add(next);
+                }
+            }
+        }
+        return -1;
+    }
+
+    private List<String> getNext(String status) {
+        List<String> list = new LinkedList<>();
+        char[] arr = status.toCharArray();
+        for (int i = 0; i < arr.length; i++) {
+            char c = arr[i];
+            arr[i] = pre(c);
+            list.add(new String(arr));
+            arr[i] = next(c);
+            list.add(new String(arr));
+            arr[i] = c;
+        }
+        return list;
+    }
+
+    private char pre(char c) {
+        return c == '0' ? '9' : (char)(c - 1);
+    }
+
+    private char next(char c) {
+        return c == '9' ? '0' : (char)(c + 1);
+    }
+
+    // 方法3：双向BFS
+    public int openLock3(String[] deadends, String target) {
+        String init = "0000";
+        if (init.equals(target)) {
+            return 0;
+        }
+        Set<String> dead = new HashSet<>();
+        for (String s : deadends) {
+            dead.add(s);
+        }
+        if (dead.contains(init)) {
+            return -1;
+        }
+        Queue<String> q1 = new LinkedList<>(), q2 = new LinkedList<>();
+        // 记录状态是经过多少次转换而来
+        Map<String, Integer> m1 = new HashMap<>(), m2 = new HashMap<>();
+        q1.offer(init);
+        q2.offer(target);
+        m1.put(init, 0);
+        m2.put(target, 0);
+        while (!q1.isEmpty() && !q2.isEmpty()) {
+            int t = q1.size() < q2.size() ? update(q1, dead, m1, m2) : update(q2, dead, m2, m1);
+            if (t != -1) {
+                return t;
+            }
+        }
+        return -1;
+    }
+
+    private int update(Queue<String> queue, Set<String> dead, Map<String, Integer> cur, Map<String, Integer> other) {
+        String status = queue.poll();
+        int step = cur.get(status);
+        for (String s : getNext(status)) {
+            if (!cur.containsKey(s) && !dead.contains(s)) {
+                if (other.containsKey(s)) {
+                    return step + other.get(s) + 1;
+                } else {
+                    queue.offer(s);
+                    cur.put(s, step + 1);
+                }
+            }
+        }
+        return -1;
+    }
+
+    // 方法4：IDA*
+    public int openLock(String[] deadends, String target) {
+        String init = "0000";
+        if (init.equals(target)) {
+            return 0;
+        }
+        Set<String> dead = new HashSet<>();
+        for (String s : deadends) {
+            dead.add(s);
+        }
+        if (dead.contains(init)) {
+            return -1;
+        }
+        int max = 0;
+        for (int i = 0; i < target.length(); i++) {
+            int diff = target.charAt(i) - '0';
+            max += Math.max(diff, 10 - diff);
+        }
+        // 记录当前状态的深度，即步数
+        Map<String, Integer> map = new HashMap<>();
+        map.put(init, 0);
+        // 当前最大遍历的深度
+        int depth = 0;
+        // 不断扩大遍历深度，尝试以较小的深度得到结果
+        // IDA*不存储已遍历过的状态，存在重复遍历
+        // while (depth <= max && !dfs(0, depth, init, target, dead, map)) {
+        // 可以优化最小的遍历深度
+        depth = getF(init, target);
+        while (depth <= max && !dfs(0, depth, init, target, dead, map)) {
+            map.clear();
+            map.put(init, 0);
+            depth++;
+        }
+        return depth > max ? -1 : depth;
+    }
+
+    private boolean dfs(int depth, int max, String cur, String target, Set<String> dead, Map<String, Integer> map) {
+        if (depth + getF(cur, target) > max) {
+            return false;
+        }
+        if (getF(cur, target) == 0) {
+            return true;
+        }
+        for (String next : getNext(cur)) {
+            if (!dead.contains(next) && (!map.containsKey(next) || map.get(next) > depth + 1)) {
+                map.put(next, depth + 1);
+                if (dfs(depth + 1, max, next, target, dead, map)) {
+                    return true;
+                }
+            }
+        } 
+        return false;
+    }
+
+    private int getF(String cur, String target) {
+        int f = 0;
+        for (int i = 0; i < target.length(); i++) {
+            int a = cur.charAt(i) - '0';
+            int b = target.charAt(i) - '0';
+            int diff = Math.abs(a - b);
+            f += Math.min(diff, 10 - diff);
+        }
+        return f;
+    }
+}
+
+class AStar {
+    String status;
+    int f, g, h;
+    public AStar(String status, String target, int g) {
+        this.status = status;
+        this.g = g;
+        this.h = getH(status, target);
+        this.f = this.g + this.h;
+    }
+
+    public int getH(String status, String target) {
+        int res = 0;
+        for (int i = 0; i < 4; i++) {
+            int distance = Math.abs(status.charAt(i) - target.charAt(i));
+            res += Math.min(distance, 10 - distance);
+        }
+        return res;
     }
 }
