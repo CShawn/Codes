@@ -27,6 +27,7 @@ class Q815Test {
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
     void numBusesToDestination(int[][] routes, int source, int target, int result) {
+        Assertions.assertEquals(result, new Q815().numBusesToDestination1(routes, source, target));
         Assertions.assertEquals(result, new Q815().numBusesToDestination(routes, source, target));
     }
 }

@@ -34,7 +34,7 @@ import java.util.*;
  */
 public class Q815 {
     // 广度优先遍历
-    public int numBusesToDestination(int[][] routes, int source, int target) {
+    public int numBusesToDestination1(int[][] routes, int source, int target) {
         if (source == target) {
             return 0;
         }
@@ -84,6 +84,97 @@ public class Q815 {
                         }
                     }
                     checkedBus.add(r);
+                }
+            }
+        }
+        return -1;
+    }
+
+    // 方法2：并查集+双向BFS
+    private int[] parent = new int[1000000];
+    private void union(int x, int y) {
+        parent[find(x)] = parent[find(y)];
+    }
+    private int find(int x) {
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+    private boolean query(int x, int y) {
+        return find(x) == find(y);
+    }
+    public int numBusesToDestination(int[][] routes, int source, int target) {
+        if (source == target) {
+            return 0;
+        }
+        for (int i = 0; i < parent.length; i++) {
+            parent[i] = i;
+        }
+        for (int[] r : routes) {
+            for (int j : r) {
+                union(r[0], j);
+            }
+        }
+        if (!query(source, target)) {
+            return -1;
+        }
+        // 记录每个车站可乘坐的车次
+        Map<Integer, Set<Integer>> map = new HashMap<>();
+        // 存储路线
+        Queue<Integer> q1 = new LinkedList<>(), q2 = new LinkedList<>();
+        // 存储<站点, 到达此站点的乘车次数>
+        Map<Integer, Integer> m1 = new HashMap<>(), m2 = new HashMap<>();
+        for (int i = 0; i < routes.length; i++) {
+            for (int j = 0; j < routes[i].length; j++) {
+                Set<Integer> list = map.get(routes[i][j]);
+                if (list == null) {
+                    list = new HashSet<>();
+                    list.add(i);
+                    map.put(routes[i][j], list);
+                } else {
+                    list.add(i);
+                }
+                if (routes[i][j] == source) {
+                    q1.offer(i);
+                    m1.put(i, 1);
+                } else if (routes[i][j] == target) {
+                    q2.offer(i);
+                    m2.put(i, 1);
+                }
+            }
+        }
+        // 判断是否有交集
+        Set<Integer> s1 = map.get(source);
+        Set<Integer> s2 = map.get(target);
+        Set<Integer> tmp = new HashSet<>();
+        tmp.addAll(s1);
+        tmp.retainAll(s2);
+        if (!tmp.isEmpty()) {
+            return 1;
+        }
+        // 双向BFS
+        while (!q1.isEmpty() && !q2.isEmpty()) {
+            int t = q1.size() <= q2.size() ? update(routes, map, q1, m1, m2) : update(routes, map, q2, m2, m1);
+            if (t != -1) {
+                return t;
+            }
+        }
+        return -1;
+    }
+
+    private int update(int[][] routes, Map<Integer, Set<Integer>> map, Queue<Integer> queue, Map<Integer, Integer> cur, Map<Integer, Integer> other) {
+        int curLine = queue.poll();
+        int step = cur.get(curLine);
+        for (int station : routes[curLine]) {
+            Set<Integer> lines = map.get(station);
+            if (!lines.isEmpty()) {
+                for (int line : lines) {
+                    if (!cur.containsKey(line)) {
+                        if (other.containsKey(line)) {
+                            return step + other.get(line);
+                        }
+                        cur.put(line, step + 1);
+                        queue.offer(line);
+                    }
                 }
             }
         }
