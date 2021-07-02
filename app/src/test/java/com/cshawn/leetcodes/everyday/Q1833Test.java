@@ -10,25 +10,23 @@ import java.util.stream.Stream;
 
 /**
  * @author C.Shawn
- * @date 2021/5/8 10:07 下午
+ * @date 2021/7/2 11:09 上午
  */
-class Q1723Test {
-
+class Q1833Test {
     static class DataArgumentsProvider implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
-                    Arguments.of(new int[]{3,2,3}, 3, 3),
-                    Arguments.of(new int[]{1,2,4,7,8}, 2, 11),
-                    Arguments.of(new int[]{254,256,256,254,251,256,254,253,255,251,251,255}, 10, 504)
+                    Arguments.of(new int[]{1,3,2,4,1}, 7, 4),
+                    Arguments.of(new int[]{10,6,8,7,7,8}, 5, 0),
+                    Arguments.of(new int[]{1,6,3,1,2,5},20,6)
             );
         }
     }
 
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
-    void minimumTimeRequired(int[] jobs, int k, int result) {
-        Assertions.assertEquals(result, new Q1723().minimumTimeRequired1(jobs, k));
-        Assertions.assertEquals(result, new Q1723().minimumTimeRequired(jobs, k));
+    void maxIceCream(int[] costs, int coins, int result) {
+        Assertions.assertEquals(result, new Q1833().maxIceCream(costs, coins));
     }
 }
