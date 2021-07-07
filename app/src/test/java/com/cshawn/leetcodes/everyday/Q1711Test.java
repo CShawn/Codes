@@ -28,6 +28,7 @@ class Q1711Test {
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
     void countPairs(int[] deliciousness, int result) {
+        Assertions.assertEquals(result, new Q1711().countPairs1(deliciousness));
         Assertions.assertEquals(result, new Q1711().countPairs(deliciousness));
     }
 }

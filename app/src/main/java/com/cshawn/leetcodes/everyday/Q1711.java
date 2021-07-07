@@ -32,7 +32,7 @@ import java.util.Map;
  * @date 2021/7/7 8:47 上午
  */
 public class Q1711 {
-    public int countPairs(int[] deliciousness) {
+    public int countPairs1(int[] deliciousness) {
         // 统计相同数字出现的次数，并求出最值
         Map<Integer, Integer> repeat = new HashMap<>();
         int max = 0, min = Integer.MAX_VALUE;
@@ -75,6 +75,42 @@ public class Q1711 {
                 }
             }
             repeat.put(cur, 0);
+        }
+        return result;
+    }
+
+    // Map统计当前位置之前数字出现的次数, 不过没有方法1快
+    public int countPairs(int[] deliciousness) {
+        // 求出最值
+        int max = 0, min = Integer.MAX_VALUE;
+        for (int de : deliciousness) {
+            if (de > max) {
+                max = de;
+            }
+            if (de < min) {
+                min = de;
+            }
+        }
+        // 2的幂最小为1，不是0
+        if (min < 1) {
+            min = 1;
+        }
+        int max1 = 32 - Integer.numberOfLeadingZeros(max);
+        int min1 = 32 - Integer.numberOfLeadingZeros(min) - 1;
+        // 存储2的幂次的数组
+        int[] sums = new int[max1 - min1 + 1];
+        int index = 0;
+        for (int i = min1; i <= max1; i++) {
+            sums[index++] = 1 << i;
+        }
+        int result = 0;
+        Map<Integer, Integer> repeat = new HashMap<>();
+        for (int d : deliciousness) {
+            for (int sum : sums) {
+                int count = repeat.getOrDefault(sum - d, 0);
+                result = (result + count) % 1000000007;
+            }
+            repeat.put(d, repeat.getOrDefault(d, 0) + 1);
         }
         return result;
     }
