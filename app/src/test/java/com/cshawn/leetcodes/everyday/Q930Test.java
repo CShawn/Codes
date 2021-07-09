@@ -27,6 +27,8 @@ class Q930Test {
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
     void numSubarraysWithSum(int[] nums, int goal, int result) {
+        Assertions.assertEquals(result, new Q930().numSubarraysWithSum1(nums, goal));
+        Assertions.assertEquals(result, new Q930().numSubarraysWithSum2(nums, goal));
         Assertions.assertEquals(result, new Q930().numSubarraysWithSum(nums, goal));
     }
 }
