@@ -10,14 +10,14 @@ import java.util.stream.Stream;
 
 /**
  * @author C.Shawn
- * @date 2021/7/11 11:23 上午
+ * @date 2021/7/12 9:19 上午
  */
-class Q274Test {
+class Q275Test {
     static class DataArgumentsProvider implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
-                    Arguments.of(new int[]{3,0,6,1,5}, 3),
+                    Arguments.of(new int[]{0,1,3,5,6}, 3),
                     Arguments.of(new int[]{0,1,3,3,4,5,5,6}, 4),
                     Arguments.of(new int[]{0,1,2,3}, 2),
                     Arguments.of(new int[]{5,5,5}, 3),
@@ -30,7 +30,6 @@ class Q274Test {
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
     void hIndex(int[] citations, int result) {
-        Assertions.assertEquals(result, new Q274().hIndex1(citations));
-        Assertions.assertEquals(result, new Q274().hIndex(citations));
+        Assertions.assertEquals(result, new Q275().hIndex(citations));
     }
 }
