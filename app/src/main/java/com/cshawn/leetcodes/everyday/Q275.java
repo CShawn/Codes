@@ -24,12 +24,30 @@ package com.cshawn.leetcodes.everyday;
  */
 public class Q275 {
     // 二分查找
-    public int hIndex(int[] citations) {
+    public int hIndex1(int[] citations) {
         int left = 0, right = citations.length - 1, mid;
         while (left <= right) {
             mid = ((right - left) >> 1) + left;
             if (citations[mid] >= citations.length - mid) {
                 right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return citations.length - left;
+    }
+
+    // 二分查找
+    public int hIndex(int[] citations) {
+        // 当left到达length - 1时，值为0则结果为0，值为其他值则结果为1，处理特殊情况0
+        if (citations.length == 0 || citations[citations.length - 1] == 0) {
+            return 0;
+        }
+        int left = 0, right = citations.length - 1, mid;
+        while (left < right) {
+            mid = ((right - left) >> 1) + left;
+            if (citations[mid] >= citations.length - mid) {
+                right = mid;
             } else {
                 left = mid + 1;
             }
