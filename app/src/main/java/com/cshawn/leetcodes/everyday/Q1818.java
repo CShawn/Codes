@@ -62,7 +62,7 @@ public class Q1818 {
             }
         }
         // 最后max可能过大导致result-max为负数，因此加MOD再取余
-        return result - max;
+        return (result - max + 1000000007) % 1000000007;
     }
 
     // 二分查找最接近target的数值索引
