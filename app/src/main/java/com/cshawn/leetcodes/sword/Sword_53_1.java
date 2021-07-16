@@ -38,6 +38,44 @@ public class Sword_53_1 {
         return right - left + 1;
     }
 
+    // 二分法
+    public int search1(int[] nums, int target) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int left = 0, right = nums.length, mid;
+        while (left < right) {
+            mid = left + ((right - left) >> 1);
+            if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        if (left >= nums.length || nums[left] != target) {
+            return 0;
+        }
+        int l = left;
+        right = nums.length - 1;
+        while (left < right) {
+            mid = left + ((right - left) >> 1);
+            if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                left = mid;
+            }
+            if (left + 1 == right) {
+                break;
+            }
+        }
+        int r = nums[right] == target ? right : left;
+        return r - l + 1;
+    }
+
     /**
      * 二分查找值
      */
