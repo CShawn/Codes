@@ -1,8 +1,6 @@
 package com.cshawn.leetcodes.everyday;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * 找到最终的安全状态
@@ -35,17 +33,15 @@ import java.util.List;
  * @date 2021/8/5 10:43 上午
  */
 public class Q802 {
-    // DFS
-    public List<Integer> eventualSafeNodes(int[][] graph) {
+    // 方法1: DFS
+    public List<Integer> eventualSafeNodes1(int[][] graph) {
         List<Integer> result = new ArrayList<>();
         Boolean[] memo = new Boolean[graph.length];
         boolean[] visited = new boolean[graph.length];
         for (int i = 0; i < graph.length; i++) {
-            visited[i] = true;
             if (isSafe(graph, i, memo, visited)) {
                 result.add(i);
             }
-            visited[i] = false;
         }
         return result;
     }
@@ -54,20 +50,91 @@ public class Q802 {
         if (memo[index] != null) {
             return memo[index];
         }
-        if (graph[index].length == 0)  {
-            return true;
-        }
+        visited[index] = true;
         for (int i : graph[index]) {
             if (visited[i]) {
                 return false;
             }
-            visited[i] = true;
             memo[i] = isSafe(graph, i, memo, visited);
-            visited[i] = false;
             if (!memo[i]) {
                 return false;
             }
         }
+        visited[index] = false;
+        // 此时有两种情况：1.所有index的后继结点都是安全的;2.graph[index]为空
         return true;
+    }
+
+    // 方法2：DFS + 三色标记法
+    // 实际上也是对方法1的空间优化
+    public List<Integer> eventualSafeNodes2(int[][] graph) {
+        // 0为白色(未访问)，1为灰色(已访问)，2为黑色(安全)
+        int[] colors = new int[graph.length];
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < graph.length; i++) {
+            if (dfs(graph, colors, i)) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+
+    private boolean dfs(int[][] graph, int[] colors, int index) {
+        if (colors[index] != 0) {
+            return colors[index] == 2;
+        }
+        colors[index] = 1;
+        for (int i : graph[index]) {
+            if (!dfs(graph, colors, i)) {
+                return false;
+            }
+        }
+        colors[index] = 2;
+        return true;
+    }
+
+    // 方法3：拓朴排序
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        // 存储反向图
+        List<Integer>[] reverse = new List[graph.length];
+        // 存储反向图的入度，即原图的出度
+        int[] ins = new int[graph.length];
+        Queue<Integer> queue = new LinkedList<>();
+        // 构构反向图
+        for (int i = 0; i < graph.length; i++) {
+            ins[i] = graph[i].length;
+            // 将入度为0的结点加入队列
+            if (graph[i].length == 0) {
+                queue.add(i);
+            }
+            for (int g : graph[i]) {
+                List<Integer> list = reverse[g];
+                if (list == null) {
+                    list = new ArrayList<>();
+                    reverse[g] = list;
+                }
+                list.add(i);
+            }
+        }
+        // BFS
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            if (reverse[node] != null) {
+                for (Integer next : reverse[node]) {
+                    // 将结点的入度减1，为0则可以放入队列
+                    if (--ins[next] == 0) {
+                        queue.offer(next);
+                    }
+                }
+            }
+        }
+        // 统计入度为0的结点，可放入拓朴排序中，无环结点
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < ins.length; i++) {
+            if (ins[i] == 0) {
+                result.add(i);
+            }
+        }
+        return result;
     }
 }

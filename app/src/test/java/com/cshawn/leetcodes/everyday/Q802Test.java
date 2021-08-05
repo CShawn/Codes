@@ -29,6 +29,8 @@ class Q802Test {
     @ParameterizedTest
     @ArgumentsSource(DataArgumentsProvider.class)
     void eventualSafeNodes(int[][] graph, Integer[] result) {
+        Assertions.assertArrayEquals(result, new Q802().eventualSafeNodes1(graph).toArray());
+        Assertions.assertArrayEquals(result, new Q802().eventualSafeNodes2(graph).toArray());
         Assertions.assertArrayEquals(result, new Q802().eventualSafeNodes(graph).toArray());
     }
 }
