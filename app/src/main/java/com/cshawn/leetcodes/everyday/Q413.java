@@ -69,7 +69,7 @@ public class Q413 {
     }
 
     // 方法3：优化动态规划
-    public int numberOfArithmeticSlices(int[] nums) {
+    public int numberOfArithmeticSlices3(int[] nums) {
         if (nums.length < 3) {
             return 0;
         }
@@ -83,6 +83,24 @@ public class Q413 {
                 dp_1 = 0;
             }
             pre = diff;
+        }
+        return result;
+    }
+
+    // 方法4：优化双指针
+    public int numberOfArithmeticSlices(int[] nums) {
+        if (nums.length < 3) {
+            return 0;
+        }
+        int result = 0, pre = nums[1] - nums[0], count = 0;
+        for (int i = 2; i < nums.length; i++) {
+            int diff = nums[i] - nums[i - 1];
+            if (diff == pre) {
+                result += ++count;
+            } else {
+                pre = diff;
+                count = 0;
+            }
         }
         return result;
     }

@@ -33,6 +33,7 @@ class Q413Test {
     void numberOfArithmeticSlices(int[] nums, int result) {
         Assertions.assertEquals(result, new Q413().numberOfArithmeticSlices1(nums));
         Assertions.assertEquals(result, new Q413().numberOfArithmeticSlices2(nums));
+        Assertions.assertEquals(result, new Q413().numberOfArithmeticSlices3(nums));
         Assertions.assertEquals(result, new Q413().numberOfArithmeticSlices(nums));
     }
 }
