@@ -49,16 +49,17 @@ public class Q446 {
             return 0;
         }
         // dp[i][j]表示以nums[i]结尾，公差为j的等差数列个数
-        Map<Long, Integer>[] dp = new Map[nums.length];
-        dp[0] = new HashMap<>();
-        dp[1] = new HashMap<>();
-        dp[1].put((long) nums[1] - (long) nums[0], 1);
+        Map<Integer, Integer>[] dp = new Map[nums.length];
         int result = 0;
-        for (int i = 2; i < nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             dp[i] = new HashMap<>();
-            for (int j = i - 1; j >= 0; j--) {
-                long diff = (long) nums[i] - (long) nums[j];
-                Map<Long, Integer> map = dp[j];
+            for (int j = 0; j < i; j++) {
+                long temp = (long) nums[i] - (long) nums[j];
+                if (temp > Integer.MAX_VALUE || temp < Integer.MIN_VALUE) {
+                    continue;
+                }
+                int diff = (int) temp;
+                Map<Integer, Integer> map = dp[j];
                 int count = map.getOrDefault(diff, 0);
                 dp[i].put(diff, dp[i].getOrDefault(diff, 0) + count + 1);
                 result += count;
