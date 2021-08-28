@@ -67,7 +67,7 @@ public class Q2 {
     }
 
     // 倒序优化一维
-    public int pack01(int N, int V, int[] v, int[] w) {
+    public int pack01_3(int N, int V, int[] v, int[] w) {
         // dp[i][j]表示前i个物品，使用容量为j时的最大价值
         int[] dp = new int[V + 1];
         // 先赋值第0个物品的最大价值，容量可以装下此物品时，价值为v[0]
@@ -79,6 +79,20 @@ public class Q2 {
                 if (v[i] <= j) {
                     dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
                 }
+            }
+        }
+        return dp[V];
+    }
+
+    // 继续优化
+    public int pack01(int N, int V, int[] v, int[] w) {
+        // dp[i][j]表示前i个物品，使用容量为j时的最大价值
+        int[] dp = new int[V + 1];
+        // 第0个物品可放入for循环中
+        for (int i = 0; i < N; i++) {
+            // 将v[i]<=j与for条件合并
+            for (int j = V; j >= v[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
             }
         }
         return dp[V];

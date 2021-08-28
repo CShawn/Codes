@@ -29,6 +29,7 @@ class Q2Test {
     void pack01(int N, int V, int[] v, int[] w, int result) {
         Assertions.assertEquals(result, new Q2().pack01_1(N, V, v, w));
         Assertions.assertEquals(result, new Q2().pack01_2(N, V, v, w));
+        Assertions.assertEquals(result, new Q2().pack01_3(N, V, v, w));
         Assertions.assertEquals(result, new Q2().pack01(N, V, v, w));
     }
 }
