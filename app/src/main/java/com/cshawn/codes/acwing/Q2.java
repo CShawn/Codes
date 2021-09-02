@@ -50,11 +50,9 @@ public class Q2 {
     public int pack01_2(int N, int V, int[] v, int[] w) {
         // dp[i][j]表示前i个物品，使用容量为j时的最大价值
         int[][] dp = new int[2][V + 1];
-        // 先赋值第0个物品的最大价值，容量可以装下此物品时，价值为v[0]
-        for (int j = v[0]; j <= V; j++) {
-            dp[0][j] = w[0];
-        }
-        for (int i = 1; i < N; i++) {
+        // 使用滚动数组时，index为0时，pre为1,元素都是0，第一次遍历会为dp[0][j]赋值
+        // 因此去掉dp[0][j]的单独赋值，i从0开始
+        for (int i = 0; i < N; i++) {
             int index = i & 1, pre = index ^ 1;
             for (int j = 0; j <= V; j++) {
                 dp[index][j] = dp[pre][j];
@@ -70,11 +68,7 @@ public class Q2 {
     public int pack01_3(int N, int V, int[] v, int[] w) {
         // dp[i][j]表示前i个物品，使用容量为j时的最大价值
         int[] dp = new int[V + 1];
-        // 先赋值第0个物品的最大价值，容量可以装下此物品时，价值为v[0]
-        for (int j = v[0]; j <= V; j++) {
-            dp[j] = w[0];
-        }
-        for (int i = 1; i < N; i++) {
+        for (int i = 0; i < N; i++) {
             for (int j = V; j >= 0; j--) {
                 if (v[i] <= j) {
                     dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
