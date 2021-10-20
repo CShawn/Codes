@@ -1,7 +1,7 @@
 package com.cshawn.codes.leetcodes.everyday;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * 添加与搜索单词 - 数据结构设计
@@ -44,8 +44,10 @@ public class Q211 {
     // 字典树
     static class WordDictionary {
         private final Trie node;
+        private final Queue<Trie> queue;
         public WordDictionary() {
             node = new Trie();
+            queue = new LinkedList<>();
         }
 
         public void addWord(String word) {
@@ -75,32 +77,30 @@ public class Q211 {
         }
 
         private boolean bfs(String word) {
-            List<Trie> cur = new ArrayList<>();
-            cur.add(node);
-            List<Trie> temp = new ArrayList<>();
+            queue.clear();
+            queue.add(node);
             for (int i = 0; i < word.length(); i++) {
                 int c = word.charAt(i) - 'a';
-                temp.clear();
-                for (Trie trie : cur) {
+                int size = queue.size();
+                for (int j = 0; j < size; j++) {
+                    Trie trie = queue.poll();
                     if (c < 0 || trie.children[c] != null) {
                         if (c < 0) {
                             for (Trie child : trie.children) {
                                 if (child != null) {
-                                    temp.add(child);
+                                    queue.add(child);
                                 }
                             }
                         } else {
-                            temp.add(trie.children[c]);
+                            queue.add(trie.children[c]);
                         }
                     }
                 }
-                if (temp.isEmpty()) {
+                if (queue.isEmpty()) {
                     return false;
                 }
-                cur.clear();
-                cur.addAll(temp);
             }
-            for (Trie trie : cur) {
+            for (Trie trie : queue) {
                 if (trie.isEnd) {
                     return true;
                 }
