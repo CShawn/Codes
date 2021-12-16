@@ -158,7 +158,7 @@ public class Q1610 {
     }
 
     // arctan 角度排序 + 滑动窗口
-    public int visiblePoints2(List<List<Integer>> points, int angle, List<Integer> location) {
+    public int visiblePoints(List<List<Integer>> points, int angle, List<Integer> location) {
         int originX = location.get(0);
         int originY = location.get(1);
         // 反正切角度范围为[-π,π]
@@ -189,47 +189,6 @@ public class Q1610 {
                 right++;
             }
             result = Math.max(result, right - left);
-        }
-        return result + origin;
-    }
-
-    // 优化方法2
-    public int visiblePoints(List<List<Integer>> points, int angle, List<Integer> location) {
-        int originX = location.get(0);
-        int originY = location.get(1);
-        // 反正切角度范围为[-π,π]
-        List<Double> degrees = new ArrayList<>();
-        int origin = 0;
-        for (List<Integer> point : points) {
-            int x = point.get(0);
-            int y = point.get(1);
-            if (x == originX && y == originY) {
-                origin++;
-            } else {
-                degrees.add(Math.atan2(y - originY, x - originX));
-            }
-        }
-        if (degrees.isEmpty()) {
-            return origin;
-        }
-        Collections.sort(degrees);
-        int size = degrees.size();
-        for (int i = 0; i < size; i++) {
-            degrees.add(degrees.get(i) + 2 * Math.PI);
-        }
-        int left = 0, right = 0, temp = 0, result = 0;
-        double angleRadians = Math.toRadians(angle);
-        double end = degrees.get(left) + angleRadians;
-        while (left < size) {
-            if (degrees.get(right) <= end) {
-                right++;
-                temp++;
-                result = Math.max(result, temp);
-            } else {
-                left++;
-                temp--;
-                end = degrees.get(left) + angleRadians;
-            }
         }
         return result + origin;
     }

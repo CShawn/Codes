@@ -44,7 +44,6 @@ class Q1610Test {
             }
             list.add(pL);
         }
-        assertEquals(result, new Q1610().visiblePoints2(list, angle, Arrays.asList(location)));
         assertEquals(result, new Q1610().visiblePoints(list, angle, Arrays.asList(location)));
         assertEquals(result, new Q1610().visiblePoints1(list, angle, Arrays.asList(location)));
     }
