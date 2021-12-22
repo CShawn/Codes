@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class Q28Test {
 
     @ParameterizedTest
-    @CsvSource({"'','',0", "a,'',0", "'',a,-1", "a,b,-1", "aaa,aa,0", "aa,aaa,-1", "ab,cde,-1", "ab,ab,0", "abab,ab,0", "ababc,abc,2"})
+    @CsvSource({"aaac,aac,1", "'','',0", "a,'',0", "'',a,-1", "a,b,-1", "aaa,aa,0", "aa,aaa,-1", "ab,cde,-1", "ab,ab,0", "abab,ab,0", "ababc,abc,2"})
     void strStr(String haystack, String needle, int index) {
         Assertions.assertEquals(index, new Q28().strStr1(haystack, needle));
         Assertions.assertEquals(index, new Q28().strStr(haystack, needle));

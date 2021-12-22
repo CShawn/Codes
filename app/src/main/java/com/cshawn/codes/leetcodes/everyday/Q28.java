@@ -56,6 +56,7 @@ public class Q28 {
     }
 
     // 方法2：KPM算法
+    // https://www.cnblogs.com/yjiyjige/p/3263858.html
     public int strStr(String haystack, String needle) {
         if (needle.length() == 0) {
             return 0;
@@ -63,33 +64,43 @@ public class Q28 {
         if (haystack.length() == 0 || needle.length() > haystack.length()) {
             return -1;
         }
-        int j = 0, k = -1;
         // 用于存储needle中每个字符不匹配时，需要回退到的位置
-        int[] next = new int[needle.length()];
-        // 第一个字符不匹配，则需要取haystack下一个字符并重新匹配
-        next[0] = -1;
-        while (j < needle.length() - 1) {
-            // 当j,k两个位置的字符相同时，j+1不匹配时，可倒退至k+1的位置
-            // 因为[0,k]与[j-k,j]完全相同，可回退这部分，直接将haystack[i]与needle[k+1]进行对比，从而优化速度
-            if (k == -1 || needle.charAt(j) == needle.charAt(k)) {
-                next[++j] = ++k;
-            } else {
-                // 相当于两个字符串匹配时，匹配到k不相等，那么将k回退到其对应的位置，再看j与此位置元素是否相同并计算next[j]
-                k = next[k];
-            }
-        }
+        int[] next = getNext(needle);
         // 开始遍历匹配
         int m = 0, n = 0;
         while (m < haystack.length() && n < needle.length()) {
             // 当n为-1时，重新从头匹配
             if (n == -1 || haystack.charAt(m) == needle.charAt(n)) {
-                m++;
-                n++;
+                m++;// 向右移动m
+                n++;// n = 0
             } else {
                 // 跳到n所对应的倒退位置
                 n = next[n];
             }
         }
         return n == needle.length() ? m - n : -1;
+    }
+
+    private int[] getNext(String str) {
+        int[] next = new int[str.length()];
+        // 第一个字符不匹配，则需要取haystack下一个字符并重新匹配
+        next[0] = -1;
+        int j = 0, k = -1;
+        while (j < str.length() - 1) {
+            // 当j,k两个位置的字符相同时，j+1不匹配时，可倒退至k+1的位置
+            // 因为[0,k]与[j-k,j]完全相同，可回退这部分，直接将haystack[i]与needle[k+1]进行对比，从而优化速度
+            if (k == -1 || str.charAt(j) == str.charAt(k)) {
+                if (str.charAt(++j) == str.charAt(++k)) {
+                    // 当两个字符相等时要跳过
+                    next[j] = next[k];
+                } else {
+                    next[j] = k;
+                }
+            } else {
+                // 相当于两个字符串匹配时，匹配到k不相等，那么将k回退到其对应的位置，再看j与此位置元素是否相同并计算next[j]
+                k = next[k];
+            }
+        }
+        return next;
     }
 }
