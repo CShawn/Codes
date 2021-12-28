@@ -34,7 +34,7 @@ import java.util.List;
  * @date 2021/12/28 1:40 下午
  */
 public class Q472 {
-    // 排序 + 字典树
+    // 排序 + 字典树 + DFS
     public List<String> findAllConcatenatedWordsInADict(String[] words) {
         List<String> result = new ArrayList<>();
         Arrays.sort(words, Comparator.comparingInt(String::length));
@@ -52,6 +52,8 @@ public class Q472 {
         return result;
     }
 
+    // DFS
+    // 注意trie.isEnd时，可作为一个单词从头开始，也可以当作单词未结束，继续查找
     private boolean find(Trie root, String word, int index) {
         if (index == word.length()) {
             return true;
