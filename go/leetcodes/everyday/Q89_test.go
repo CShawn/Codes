@@ -29,7 +29,7 @@ func Test_grayCode(t *testing.T) {
 			if got := grayCode1(tt.args.n); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("grayCode1() = %v, want %v", got, tt.want)
 			}
-			if got := grayCode(tt.args.n); !reflect.DeepEqual(got, tt.want) {
+			if got := grayCode2(tt.args.n); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("grayCode2() = %v, want %v", got, tt.want)
 			}
 			if got := grayCode(tt.args.n); !reflect.DeepEqual(got, tt.want) {
