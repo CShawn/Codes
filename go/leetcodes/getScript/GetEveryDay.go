@@ -29,39 +29,44 @@ func main() {
 
 func getQuestion() (Question, error) {
 	everyData, err := request(getEveryData)
-	if err == nil {
-		var slugData EveryData
-		err = json.Unmarshal(everyData, &slugData)
-		if err == nil {
-			slug := slugData.Data.TodayRecord[0].Question.TitleSlug
-			everyData, err := request(getDetail(slug))
-			if err == nil {
-				var detail EveryDetail
-				err = json.Unmarshal(everyData, &detail)
-				if err == nil {
-					question := detail.Data.Question
-					question.Date = slugData.Data.TodayRecord[0].Date
-					regex, err := regexp.Compile("<.*?>")
-					if err == nil {
-						question.Content = regex.ReplaceAllString(question.Content, "")
-						question.TranslatedContent = regex.ReplaceAllString(question.TranslatedContent, "")
-						return question, nil
-					} else {
-						_ = fmt.Errorf("regex error")
-					}
-				} else {
-					_ = fmt.Errorf("parse Detail failed")
-				}
-			} else {
-				_ = fmt.Errorf("getDetail failed")
-			}
-		} else {
-			_ = fmt.Errorf("parse EveryData failed")
-		}
-	} else {
+	if err != nil {
 		_ = fmt.Errorf("getEveryData failed")
+		return Question{}, err
 	}
-	return Question{}, err
+	var slugData EveryData
+	err = json.Unmarshal(everyData, &slugData)
+	if err != nil {
+		_ = fmt.Errorf("parse EveryData failed")
+		return Question{}, err
+	}
+	slug := slugData.Data.TodayRecord[0].Question.TitleSlug
+	everyData, err = request(getDetail(slug))
+	if err != nil {
+		_ = fmt.Errorf("getDetail failed")
+		return Question{}, err
+	}
+	var detail EveryDetail
+	err = json.Unmarshal(everyData, &detail)
+	if err != nil {
+		_ = fmt.Errorf("parse Detail failed")
+		return Question{}, err
+	}
+	question := detail.Data.Question
+	question.Date = slugData.Data.TodayRecord[0].Date
+	regex, err := regexp.Compile("<.*?>")
+	if err != nil {
+		_ = fmt.Errorf("regex error")
+		return Question{}, err
+	}
+	question.Content = regex.ReplaceAllString(question.Content, "")
+	question.TranslatedContent = regex.ReplaceAllString(question.TranslatedContent, "")
+	regex, err = regexp.Compile("\n+")
+	question.TranslatedContent = regex.ReplaceAllString(question.TranslatedContent, "\n")
+	question.TranslatedContent = strings.ReplaceAll(question.TranslatedContent, "&nbsp;", " ")
+	question.TranslatedContent = strings.ReplaceAll(question.TranslatedContent, "&lt;", "<")
+	question.TranslatedContent = strings.ReplaceAll(question.TranslatedContent, "&gt;", ">")
+	question.TranslatedContent = strings.ReplaceAll(question.TranslatedContent, "&quot;", "\"")
+	return question, nil
 }
 
 func createFile(question Question) {
@@ -76,7 +81,7 @@ func createFile(question Question) {
 	_, _ = file.Write([]byte("\n"))
 	_, _ = file.Write([]byte(question.TranslatedContent))
 	_, _ = file.Write([]byte(" */\n"))
-	_, _ = file.Write([]byte("package everyday\n"))
+	_, _ = file.Write([]byte("package everyday\n\n"))
 	for _, code := range question.CodeSnippets {
 		if code.Lang == "Go" {
 			_, _ = file.Write([]byte(code.Code))
