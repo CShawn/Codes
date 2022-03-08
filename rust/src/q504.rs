@@ -44,7 +44,7 @@ impl Q504 {
 
 #[test]
 pub fn test_convert_to_base7() {
-    assert_eq!(Q504::convert_to_base7(100, "202");
-    assert_eq!(Q504::convert_to_base7(-7, "-10");
-    assert_eq!(Q504::convert_to_base7(0, "0");
+    assert_eq!(Q504::convert_to_base7(100, "202"));
+    assert_eq!(Q504::convert_to_base7(-7, "-10"));
+    assert_eq!(Q504::convert_to_base7(0, "0"));
 }

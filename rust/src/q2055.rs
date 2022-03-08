@@ -100,9 +100,9 @@ impl Q2055 {
 
 #[test]
 pub fn test_plates_between_candles() {
-    assert_eq!(Q2055::plates_between_candles1("**|**|***|", vec![vec![2,5],vec![5,9]]), vec![2,3]);
-    assert_eq!(Q2055::plates_between_candles1("***|**|*****|**||**|*", vec![vec![1,17],vec![4,5],vec![14,17],vec![5,11], vec![15,16]]), vec![9,0,0,0,0]);
+    assert_eq!(Q2055::plates_between_candles1("**|**|***|".to_string(), vec![vec![2,5],vec![5,9]]), vec![2,3]);
+    assert_eq!(Q2055::plates_between_candles1("***|**|*****|**||**|*".to_string(), vec![vec![1,17],vec![4,5],vec![14,17],vec![5,11], vec![15,16]]), vec![9,0,0,0,0]);
 
-    assert_eq!(Q2055::plates_between_candles("**|**|***|", vec![vec![2,5],vec![5,9]]), vec![2,3]);
-    assert_eq!(Q2055::plates_between_candles("***|**|*****|**||**|*", vec![vec![1,17],vec![4,5],vec![14,17],vec![5,11], vec![15,16]]), vec![9,0,0,0,0]);
+    assert_eq!(Q2055::plates_between_candles("**|**|***|".to_string(), vec![vec![2,5],vec![5,9]]), vec![2,3]);
+    assert_eq!(Q2055::plates_between_candles("***|**|*****|**||**|*".to_string(), vec![vec![1,17],vec![4,5],vec![14,17],vec![5,11], vec![15,16]]), vec![9,0,0,0,0]);
 }
