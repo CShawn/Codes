@@ -1,4 +1,4 @@
-mod q798;
+mod leetcodes;
 
 fn main() {
     println!("Hello, world!");
